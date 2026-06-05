@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#10b981">
+  <meta name="description" content="Control de consumo de sal mineral e inventario de animales por lotes. By Solugan SG.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BoviSal Pro">
+  <title>BoviSal Control Pro - Solugan SG</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="Logo BoviSal Pro.png">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="style.css?v=260604.1">
+
+  <!-- Fuentes locales (offline) -->
+  <style>
+    @font-face { font-family: 'Inter'; src: url('fonts/inter-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'Inter'; src: url('fonts/inter-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+    @font-face { font-family: 'Inter'; src: url('fonts/inter-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+  </style>
+
+  <!-- Librerías locales -->
+  <script src="lucide.min.js"></script>
+  <script src="libs/xlsx-js-style.min.js"></script>
+
+  <!-- Firebase Compat SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<!-- ======================== PANTALLA DE AUTH ======================== -->
+<div id="auth-container" class="auth-wrapper">
+  <div class="welcome-card glass-panel">
+    <div style="text-align:center; margin-bottom: 1.5rem;">
+      <div style="display:inline-flex;align-items:center;justify-content:center;margin-bottom:0.75rem;">
+        <img src="Logo BoviSal Pro.png" style="width:90px;height:90px;object-fit:contain;border-radius:18px;box-shadow:0 0 20px rgba(16,185,129,0.4);" alt="BoviSal Pro Logo">
+      </div>
+      <div style="font-size:1.4rem;font-weight:800;color:var(--accent);letter-spacing:1px;">BoviSal Control Pro</div>
+      <div style="font-size:0.85rem;color:var(--text-muted);font-weight:600;">By Solugan Sg</div>
+      <h3 id="auth-subtitle" style="margin-top:0.75rem;color:var(--text-muted);font-size:0.9rem;font-weight:500;">REGISTRO DE USUARIO</h3>
+    </div>
+
+    <!-- Formulario Registro -->
+    <form id="register-form" onsubmit="handleRegister(event)" autocomplete="off">
+      <div class="grid-1" style="gap:0.5rem;">
+        <div class="input-group" style="margin-bottom:0;">
+          <label style="color:var(--accent);font-weight:800;">NIT / C.C. (Llave de acceso)</label>
+          <input type="text" id="reg-nit" required placeholder="Ingresa tu identificación" class="welcome-input" autocomplete="off">
+        </div>
+        <div class="input-group" style="margin-bottom:0;">
+          <label>Nombre Completo / Razón Social</label>
+          <input type="text" id="reg-name" required placeholder="Nombre completo" class="welcome-input" autocomplete="name">
+        </div>
+        <div class="grid-2" style="gap:0.5rem;">
+          <div class="input-group" style="margin-bottom:0;">
+            <label>País</label>
+            <select id="reg-pais" class="welcome-input">
+              <option value="Colombia" selected>Colombia (+57)</option>
+              <option value="Argentina">Argentina (+54)</option>
+              <option value="Brasil">Brasil (+55)</option>
+              <option value="México">México (+52)</option>
+              <option value="Venezuela">Venezuela (+58)</option>
+              <option value="Ecuador">Ecuador (+593)</option>
+              <option value="Perú">Perú (+51)</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+          <div class="input-group" style="margin-bottom:0;">
+            <label>Teléfono / WhatsApp</label>
+            <input type="tel" id="reg-phone" required placeholder="Ej: 3147084328" class="welcome-input" autocomplete="tel">
+          </div>
+        </div>
+        <div class="input-group" style="margin-bottom:0;">
+          <label>Finca o Empresa</label>
+          <input type="text" id="reg-finca" required placeholder="Nombre de tu finca" class="welcome-input" autocomplete="organization">
+        </div>
+        <div class="input-group" style="margin-bottom:0;">
+          <label>Correo Electrónico</label>
+          <input type="email" id="reg-email" required placeholder="usuario@ejemplo.com" class="welcome-input" autocomplete="username">
+        </div>
+        <div class="input-group" style="margin-bottom:0;">
+          <label>Contraseña</label>
+          <input type="password" id="reg-pass" required placeholder="Mínimo 6 caracteres" class="welcome-input" autocomplete="new-password">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;margin-top:1.25rem;padding:0.8rem;font-size:0.9rem;font-weight:800;letter-spacing:2px;justify-content:center;">
+        <i data-lucide="play"></i> REGISTRARSE Y EMPEZAR
+      </button>
+      <p style="text-align:center;margin-top:1rem;font-size:0.85rem;color:var(--text-muted);">
+        ¿Ya tienes cuenta? <span onclick="showLoginForm()" style="color:var(--accent);cursor:pointer;font-weight:bold;text-decoration:underline;">Inicia Sesión</span>
+      </p>
+    </form>
+
+    <!-- Formulario Login -->
+    <form id="login-form" onsubmit="handleLogin(event)" style="display:none;" autocomplete="off">
+      <div class="grid-1" style="gap:0.5rem;">
+        <div class="input-group" style="margin-bottom:0;">
+          <label>Correo Electrónico</label>
+          <input type="email" id="login-email" required placeholder="usuario@ejemplo.com" class="welcome-input" autocomplete="off">
+        </div>
+        <div class="input-group" style="margin-bottom:0;">
+          <label>Contraseña</label>
+          <input type="password" id="login-pass" required placeholder="Ingresa tu contraseña" class="welcome-input" autocomplete="current-password">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;margin-top:1.25rem;padding:0.8rem;font-size:0.9rem;font-weight:800;letter-spacing:2px;justify-content:center;">
+        <i data-lucide="log-in"></i> INICIAR SESIÓN
+      </button>
+      <p style="text-align:center;margin-top:1rem;font-size:0.85rem;color:var(--text-muted);">
+        ¿No tienes cuenta? <span onclick="showRegisterForm()" style="color:var(--accent);cursor:pointer;font-weight:bold;text-decoration:underline;">Regístrate</span>
+      </p>
+    </form>
+  </div>
+</div>
+
+<!-- ======================== APP PRINCIPAL ======================== -->
+<div class="app-container" id="app-main-layout" style="display:none;">
+
+  <!-- Overlay móvil -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar glass-panel">
+    <div class="sidebar-toggle-handle" onclick="toggleSidebar()">
+      <i data-lucide="chevron-left" style="width:16px;height:16px;"></i>
+    </div>
+    <div class="sidebar-header">
+      <div class="logo-icon">
+        <img src="Logo BoviSal Pro.png" alt="BoviSal Pro" style="width:100%;height:100%;object-fit:cover;border-radius:16px;">
+      </div>
+      <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;margin-top:4px;">By Solugan Sg <span style="color:var(--accent);font-weight:bold;margin-left:2px;">V 260604.1</span></span>
+      <div id="sidebar-consultor" style="display:none;">
+        <div style="font-size:0.62rem;color:var(--text-muted);font-weight:500;margin-bottom:2px;">Usuario activo</div>
+        <div id="sidebar-consultor-name" style="font-size:0.65rem;color:var(--accent);font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;"></div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-btn active" id="nav-registro" onclick="showSection('registro-lotes', this)">
+        <i data-lucide="clipboard-list"></i> Registro de Lotes
+      </button>
+      <button class="nav-btn" id="nav-dashboard" onclick="showSection('dashboard', this)">
+        <i data-lucide="layout-dashboard"></i> Dashboard / Resumen
+      </button>
+      <button class="nav-btn" id="nav-historico" onclick="showSection('historico', this)">
+        <i data-lucide="history"></i> Histórico
+      </button>
+      <button class="nav-btn" id="nav-config" onclick="showSection('configuracion', this)">
+        <i data-lucide="settings"></i> Configuración
+      </button>
+      <button class="nav-btn" id="nav-admin" style="display:none;border-left:3px solid #f59e0b;color:#f59e0b;" onclick="showSection('admin-users', this)">
+        <i data-lucide="users"></i> Usuarios (Admin)
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-footer-content">
+        <button class="btn btn-whatsapp contact-btn" onclick="contactarWhatsApp()" style="padding:0.5rem 1rem;font-size:0.82rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.37 5.028L2 22l5.135-1.348a9.926 9.926 0 0 0 4.877 1.28h.004c5.505 0 9.99-4.478 9.99-9.984C22.007 6.478 17.518 2 12.012 2zm6.09 13.985c-.25.707-1.447 1.3-1.983 1.385-.482.076-1.11.137-3.23-.742-2.707-1.12-4.436-3.882-4.57-4.06-.135-.178-1.101-1.464-1.101-2.793 0-1.328.697-1.983.947-2.247.25-.263.55-.329.734-.329.183 0 .367.002.525.01.163.008.384-.06.6-.06.22 0 .452.082.64.526.194.462.668 1.632.727 1.75.06.118.098.256.02.412-.08.156-.118.256-.237.395-.118.14-.25.312-.355.42-.11.11-.226.23-.097.45.128.22.57 1.012 1.218 1.588.838.745 1.543.976 1.763 1.085.22.11.35.093.48-.057.13-.15.556-.647.705-.87.15-.223.3-.186.505-.11.205.076 1.302.613 1.528.727.227.113.377.17.434.27.057.1.057.576-.192 1.285z"/>
+          </svg>
+          Contáctenos
+        </button>
+
+        <div class="lang-group">
+          <label class="lang-label">LANGUAGE / IDIOMA</label>
+          <select id="language-selector" class="lang-select" onchange="changeLanguage(this.value)">
+            <option value="es">Español (ES)</option>
+            <option value="en">English (EN)</option>
+            <option value="pt">Português (PT)</option>
+          </select>
+        </div>
+
+        <div style="width:100%;margin-top:0.75rem;">
+          <button class="btn" id="btn-logout" onclick="handleLogout()" style="padding:0.45rem;font-size:0.75rem;background:rgba(239,68,68,0.15);color:#ef4444;border:1px solid rgba(239,68,68,0.3);width:100%;justify-content:center;border-radius:8px;font-weight:bold;">
+            <i data-lucide="log-out" style="width:12px;height:12px;"></i> Cerrar Sesión
+          </button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+      <button onclick="toggleSidebar()" style="background:transparent;border:none;color:var(--text-main);cursor:pointer;padding:4px;">
+        <i data-lucide="menu" style="width:24px;height:24px;"></i>
+      </button>
+      <span class="mobile-logo-text">BOVISAL PRO <span style="font-size:0.7rem;opacity:0.8;">V 260604.1</span></span>
+      <div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;">
+        <img src="Logo BoviSal Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="BoviSal">
+      </div>
+    </div>
+
+    <!-- ====== 1. REGISTRO DE LOTES ====== -->
+    <section id="registro-lotes" class="tab-content active">
+      <header class="section-header">
+        <h1 style="color:var(--accent);">📋 Registro de Lotes</h1>
+        <p>Consumo de sal mineral + inventario de animales por lote y categoría</p>
+      </header>
+
+      <!-- Encabezado del registro -->
+      <div class="glass-panel p-2 mb-2">
+        <h2 class="form-title text-accent"><i data-lucide="info"></i> Datos del Registro</h2>
+        <div class="grid-3" style="gap:1rem;">
+          <div class="input-group" style="margin-bottom:0;">
+            <label style="color:var(--accent);font-weight:800;">Fecha</label>
+            <input type="date" id="reg-fecha" oninput="calcularTotales()">
+          </div>
+          <div class="input-group" style="margin-bottom:0;">
+            <label>Nombre de la Finca</label>
+            <input type="text" id="reg-finca-reg" placeholder="Ej: El Paraíso" oninput="calcularTotales()">
+          </div>
+          <div class="input-group" style="margin-bottom:0;">
+            <label>Responsable</label>
+            <input type="text" id="reg-responsable" placeholder="Nombre del responsable" oninput="calcularTotales()">
+          </div>
+        </div>
+      </div>
+
+      <!-- Resumen rápido -->
+      <div class="resumen-grid" id="resumen-rapido">
+        <div class="resumen-card" style="border-top:4px solid var(--accent);">
+          <span class="rc-label">Total Animales</span>
+          <div class="rc-value text-accent" id="r-total-animales">0</div>
+          <div class="rc-unit">Animales en finca</div>
+        </div>
+        <div class="resumen-card" style="border-top:4px solid var(--warning);">
+          <span class="rc-label">Total Lotes</span>
+          <div class="rc-value text-warning" id="r-total-lotes">0</div>
+          <div class="rc-unit">Con animales activos</div>
+        </div>
+        <div class="resumen-card" style="border-top:4px solid var(--salt-color);">
+          <span class="rc-label">Sal Gr/Día</span>
+          <div class="rc-value" style="color:var(--salt-color)" id="r-sal-gr-dia">0</div>
+          <div class="rc-unit">Gramos por día</div>
+        </div>
+        <div class="resumen-card" style="border-top:4px solid var(--success);">
+          <span class="rc-label">Sal Kg/Día</span>
+          <div class="rc-value text-success" id="r-sal-kg-dia">0.0</div>
+          <div class="rc-unit">Kilogramos por día</div>
+        </div>
+        <div class="resumen-card" style="border-top:4px solid #f97316;">
+          <span class="rc-label">Sal Kg/Mes</span>
+          <div class="rc-value" style="color:#f97316;" id="r-sal-kg-mes">0.0</div>
+          <div class="rc-unit">Kilogramos por mes (30 días)</div>
+        </div>
+        <div class="resumen-card" style="border-top:4px solid #ef4444;">
+          <span class="rc-label">Bultos/Mes</span>
+          <div class="rc-value" style="color:#ef4444;" id="r-bultos-mes">0.0</div>
+          <div class="rc-unit" id="r-bultos-unit">Bultos (÷ <span id="lbl-peso-bulto">40</span> kg)</div>
+        </div>
+      </div>
+
+      <!-- ─── FORMULARIO AGREGAR LOTE ─── -->
+      <div class="glass-panel p-2" id="panel-nuevo-lote" style="margin-bottom:1.25rem;border-left:4px solid var(--accent);">
+        <h2 class="form-title text-accent" style="margin-bottom:1rem;"><i data-lucide="plus-circle"></i> Agregar Nuevo Lote <span id="contador-lotes-form" style="font-size:0.78rem;color:var(--text-muted);font-weight:500;">(0 lotes)</span></h2>
+
+        <div style="display:flex;gap:1rem;align-items:end;margin-bottom:1rem;flex-wrap:wrap;">
+          <div class="input-group" style="margin-bottom:0;flex:1;min-width:180px;">
+            <label style="color:var(--accent);font-weight:800;">Nombre del Lote</label>
+            <input type="text" id="nuevo-lote-nombre" placeholder="Ej: Potrero Norte, LOTE A..." style="width:100%;padding:0.65rem 1rem;background:var(--bg-input);border:1px solid rgba(16,185,129,0.4);border-radius:8px;color:var(--text-main);font-family:inherit;font-size:0.95rem;font-weight:700;" onkeydown="if(event.key==='Enter'){agregarLote();}">
+          </div>
+          <div style="display:flex;gap:0.5rem;flex-shrink:0;">
+            <button class="btn btn-primary" onclick="agregarLote()" id="btn-agregar-lote" style="padding:0.65rem 1.2rem;"><i data-lucide="plus"></i> Agregar</button>
+            <button class="btn" onclick="limpiarFormularioLote()" style="background:rgba(239,68,68,0.08);color:#ef4444;border-color:rgba(239,68,68,0.25);padding:0.65rem 0.9rem;"><i data-lucide="rotate-ccw"></i></button>
+          </div>
+        </div>
+
+        <!-- Grid de categorías -->
+        <div style="overflow-x:auto;">
+          <div style="min-width:600px;">
+            <div style="display:grid;grid-template-columns:repeat(9,1fr);gap:0.4rem;margin-bottom:0.3rem;">
+              <div style="text-align:center;font-size:0.7rem;color:var(--accent);font-weight:800;padding:0.2rem;">CH<div style="color:var(--text-muted);font-weight:400;">15g</div></div>
+              <div style="text-align:center;font-size:0.7rem;color:var(--accent);font-weight:800;padding:0.2rem;">CM<div style="color:var(--text-muted);font-weight:400;">15g</div></div>
+              <div style="text-align:center;font-size:0.7rem;color:var(--accent);font-weight:800;padding:0.2rem;">HL<div style="color:var(--text-muted);font-weight:400;">50g</div></div>
+              <div style="text-align:center;font-size:0.7rem;color:var(--accent);font-weight:800;padding:0.2rem;">ML<div style="color:var(--text-muted);font-weight:400;">40g</div></div>
+              <div style="text-align:center;font-size:0.7rem;color:var(--accent);font-weight:800;padding:0.2rem;">NV<div style="color:var(--text-muted);font-weight:400;">60g</div></div>
+              <div style="text-align:center;font-size:0.7rem;color:var(--accent);font-weight:800;padding:0.2rem;">MC<div style="color:var(--text-muted);font-weight:400;">50g</div></div>
+              <div style="text-align:center;font-size:0.7rem;color:var(--accent);font-weight:800;padding:0.2rem;">T<div style="color:var(--text-muted);font-weight:400;">70g</div></div>
+              <div style="text-align:center;font-size:0.7rem;color:var(--accent);font-weight:800;padding:0.2rem;">VP<div style="color:var(--text-muted);font-weight:400;">80g</div></div>
+              <div style="text-align:center;font-size:0.7rem;color:var(--accent);font-weight:800;padding:0.2rem;">VS<div style="color:var(--text-muted);font-weight:400;">80g</div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(9,1fr);gap:0.4rem;" id="nuevo-lote-inputs">
+              <!-- Generado por JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── MATRIZ DE LOTES DINÁMICA ─── -->
+      <div class="glass-panel p-2">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.75rem;">
+          <h2 class="form-title text-accent" style="margin:0;border:none;padding:0;"><i data-lucide="table"></i> Matriz de Lotes (<span id="lbl-total-lotes">0</span>)</h2>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="guardarRegistro()"><i data-lucide="save"></i> Guardar</button>
+            <button class="btn" onclick="limpiarLotes()" style="background:rgba(239,68,68,0.1);color:#ef4444;border-color:rgba(239,68,68,0.3);"><i data-lucide="trash-2"></i> Limpiar</button>
+            <button class="btn" onclick="exportarExcel()" style="background:rgba(16,185,129,0.1);color:var(--accent);border-color:rgba(16,185,129,0.3);"><i data-lucide="file-spreadsheet"></i> Excel</button>
+            <button class="btn btn-whatsapp" onclick="compartirWhatsApp()" style="padding:0.5rem 0.9rem;font-size:0.85rem;"><i data-lucide="send"></i> WhatsApp</button>
+          </div>
+        </div>
+
+        <!-- Estado vacío -->
+        <div id="lotes-empty-state" style="display:none;text-align:center;padding:2.5rem 1rem;">
+          <div style="font-size:2.5rem;margin-bottom:0.75rem;">📋</div>
+          <div style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1rem;">Aún no hay lotes registrados.</div>
+          <div style="color:var(--text-muted);font-size:0.82rem;">Usa el formulario de arriba para agregar tu primer lote.</div>
+        </div>
+
+        <div class="table-responsive" style="max-height:480px;overflow-y:auto;" id="tabla-lotes-wrap">
+          <table class="data-table" id="tabla-lotes" style="font-size:0.8rem;">
+            <thead>
+              <tr>
+                <th style="text-align:left;min-width:110px;background:#0f172a;">LOTE</th>
+                <th title="Cría Hembra" style="background:#0f172a;">CH<br><small style="color:var(--accent);font-size:0.65rem;">15g</small></th>
+                <th title="Cría Macho" style="background:#0f172a;">CM<br><small style="color:var(--accent);font-size:0.65rem;">15g</small></th>
+                <th title="Hembra Levante" style="background:#0f172a;">HL<br><small style="color:var(--accent);font-size:0.65rem;">50g</small></th>
+                <th title="Macho Levante" style="background:#0f172a;">ML<br><small style="color:var(--accent);font-size:0.65rem;">40g</small></th>
+                <th title="Novilla Vientre" style="background:#0f172a;">NV<br><small style="color:var(--accent);font-size:0.65rem;">60g</small></th>
+                <th title="Macho de Ceba" style="background:#0f172a;">MC<br><small style="color:var(--accent);font-size:0.65rem;">50g</small></th>
+                <th title="Toro/Reproductor" style="background:#0f172a;">T<br><small style="color:var(--accent);font-size:0.65rem;">70g</small></th>
+                <th title="Vaca Parida" style="background:#0f172a;">VP<br><small style="color:var(--accent);font-size:0.65rem;">80g</small></th>
+                <th title="Vaca Seca" style="background:#0f172a;">VS<br><small style="color:var(--accent);font-size:0.65rem;">80g</small></th>
+                <th style="background:#0f172a;color:var(--warning);">Total<br>Anim.</th>
+                <th style="background:#0f172a;color:var(--salt-color);">Gr Sal<br>Día</th>
+                <th style="background:#0f172a;color:var(--success);">Kg Sal<br>Mes</th>
+                <th style="background:#0f172a;width:36px;"></th>
+              </tr>
+            </thead>
+            <tbody id="tbody-lotes">
+              <!-- Generado por JS -->
+            </tbody>
+            <tfoot>
+              <tr style="background:rgba(16,185,129,0.05);border-top:2px solid var(--accent);">
+                <td style="text-align:left;font-weight:800;color:var(--accent);padding:0.75rem 0.5rem;">TOTALES</td>
+                <td class="lote-total" id="total-CH">0</td>
+                <td class="lote-total" id="total-CM">0</td>
+                <td class="lote-total" id="total-HL">0</td>
+                <td class="lote-total" id="total-ML">0</td>
+                <td class="lote-total" id="total-NV">0</td>
+                <td class="lote-total" id="total-MC">0</td>
+                <td class="lote-total" id="total-T">0</td>
+                <td class="lote-total" id="total-VP">0</td>
+                <td class="lote-total" id="total-VS">0</td>
+                <td class="lote-total" id="total-general" style="color:var(--warning);">0</td>
+                <td class="lote-sal" id="total-gr-dia" style="font-weight:800;">0</td>
+                <td class="lote-kilos" id="total-kg-mes">0.0</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tabla referencia consumo -->
+      <div class="glass-panel p-2 mt-1" style="margin-top:1.5rem;">
+        <h2 class="form-title text-accent"><i data-lucide="beef"></i> Tabla Referencia: Consumo Sal por Categoría</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;">
+          <table class="ref-table">
+            <thead>
+              <tr><th>Estado Productivo</th><th>Cód.</th><th>Gr Sal/Día</th></tr>
+            </thead>
+            <tbody id="ref-tbody">
+              <!-- Generado por JS -->
+            </tbody>
+          </table>
+          <div style="padding:1rem;background:rgba(16,185,129,0.05);border-radius:12px;border:1px solid rgba(16,185,129,0.2);">
+            <h4 style="color:var(--accent);margin-bottom:1rem;font-size:0.9rem;"><i data-lucide="info" style="width:14px;height:14px;"></i> Fórmulas de Cálculo</h4>
+            <div style="display:flex;flex-direction:column;gap:0.5rem;font-size:0.82rem;color:var(--text-muted);">
+              <div>🧂 <strong style="color:var(--text-main);">Gr/Día Lote</strong> = Σ(Animales × Gr/categoría)</div>
+              <div>⚖️ <strong style="color:var(--text-main);">Kg/Día Total</strong> = Total Gr/Día ÷ 1,000</div>
+              <div>📦 <strong style="color:var(--text-main);">Kg/Mes</strong> = Kg/Día × 30</div>
+              <div>🎒 <strong style="color:var(--text-main);">Bultos/Mes</strong> = Kg/Mes ÷ Peso Bulto</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 2. DASHBOARD ====== -->
+    <section id="dashboard" class="tab-content">
+      <header class="section-header">
+        <h1 style="color:var(--accent);">📊 Dashboard / Resumen</h1>
+        <p>Distribución de inventario y consumo de sal por categoría productiva</p>
+      </header>
+
+      <!-- Tarjetas resumen -->
+      <div class="resumen-grid mb-2">
+        <div class="resumen-card" style="border-top:4px solid var(--accent);">
+          <span class="rc-label">Total Animales</span>
+          <div class="rc-value text-accent" id="dash-total-animales">0</div>
+          <div class="rc-unit">En finca</div>
+        </div>
+        <div class="resumen-card" style="border-top:4px solid var(--salt-color);">
+          <span class="rc-label">Sal Gr/Día</span>
+          <div class="rc-value" style="color:var(--salt-color);" id="dash-sal-gr">0</div>
+          <div class="rc-unit">Gramos/día total</div>
+        </div>
+        <div class="resumen-card" style="border-top:4px solid var(--success);">
+          <span class="rc-label">Sal Kg/Día</span>
+          <div class="rc-value text-success" id="dash-sal-kg-dia">0.0</div>
+          <div class="rc-unit">Kg/día</div>
+        </div>
+        <div class="resumen-card" style="border-top:4px solid #f97316;">
+          <span class="rc-label">Sal Kg/Mes</span>
+          <div class="rc-value" style="color:#f97316;" id="dash-sal-kg-mes">0.0</div>
+          <div class="rc-unit">kg (30 días)</div>
+        </div>
+        <div class="resumen-card" style="border-top:4px solid #ef4444;">
+          <span class="rc-label">Bultos/Mes</span>
+          <div class="rc-value" style="color:#ef4444;" id="dash-bultos">0.0</div>
+          <div class="rc-unit" id="dash-bultos-unit">Bultos</div>
+        </div>
+        <div class="resumen-card" style="border-top:4px solid var(--warning);">
+          <span class="rc-label">Lotes Activos</span>
+          <div class="rc-value text-warning" id="dash-lotes-activos">0</div>
+          <div class="rc-unit">De 20 lotes</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- Inventario por Categoría -->
+        <div class="glass-panel p-2">
+          <h2 class="form-title text-accent"><i data-lucide="pie-chart"></i> Inventario por Categoría</h2>
+          <div id="dash-categorias">
+            <!-- Generado por JS -->
+          </div>
+        </div>
+
+        <!-- Consumo Sal por Categoría -->
+        <div class="glass-panel p-2">
+          <h2 class="form-title" style="color:var(--salt-color);"><i data-lucide="droplets"></i> Consumo Sal por Categoría</h2>
+          <div id="dash-sal-categorias">
+            <!-- Generado por JS -->
+          </div>
+          <div style="margin-top:1.25rem;padding:1rem;background:rgba(16,185,129,0.05);border-radius:10px;border:1px solid rgba(16,185,129,0.2);">
+            <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem;">Finca registrada:</div>
+            <div id="dash-finca-nombre" style="font-weight:700;font-size:1rem;color:var(--accent);">—</div>
+            <div id="dash-fecha-registro" style="font-size:0.78rem;color:var(--text-muted);margin-top:0.25rem;">Sin registro</div>
+            <div id="dash-responsable" style="font-size:0.82rem;color:var(--text-muted);margin-top:0.15rem;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 3. HISTÓRICO ====== -->
+    <section id="historico" class="tab-content">
+      <header class="section-header">
+        <h1 style="color:var(--accent);">🔍 Histórico de Registros</h1>
+        <p>Búsqueda y consulta de registros anteriores guardados en la nube</p>
+      </header>
+
+      <div class="glass-panel p-2 mb-2">
+        <div class="grid-3" style="gap:0.75rem;align-items:end;">
+          <div class="input-group" style="margin-bottom:0;">
+            <label>Buscar por Finca</label>
+            <input type="text" id="hist-buscar-finca" placeholder="Nombre de finca..." oninput="filtrarHistorico()">
+          </div>
+          <div class="input-group" style="margin-bottom:0;">
+            <label>Filtrar por Fecha</label>
+            <input type="date" id="hist-fecha" onchange="filtrarHistorico()">
+          </div>
+          <div style="display:flex;gap:0.5rem;">
+            <button class="btn btn-primary" onclick="cargarHistorico()"><i data-lucide="refresh-cw"></i> Actualizar</button>
+            <button class="btn" onclick="limpiarFiltrosHistorico()" style="background:rgba(239,68,68,0.1);color:#ef4444;border-color:rgba(239,68,68,0.3);"><i data-lucide="x"></i> Limpiar</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="historico-lista">
+        <div style="text-align:center;padding:3rem;color:var(--text-muted);">
+          <i data-lucide="archive" style="width:48px;height:48px;margin-bottom:1rem;opacity:0.3;"></i>
+          <p>Haz clic en "Actualizar" para cargar el histórico de registros.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 4. CONFIGURACIÓN ====== -->
+    <section id="configuracion" class="tab-content">
+      <header class="section-header">
+        <h1 style="color:var(--accent);">⚙️ Configuración</h1>
+        <p>Parámetros de cálculo y tabla de referencia de consumo de sal</p>
+      </header>
+
+      <div class="grid-2">
+        <!-- Config general -->
+        <div class="glass-panel p-2">
+          <h2 class="form-title text-accent"><i data-lucide="package"></i> Parámetros del Bulto de Sal</h2>
+          <div class="input-group">
+            <label style="color:var(--accent);font-weight:800;">Peso del Bulto de Sal (kg)</label>
+            <div class="spinner-wrap" style="border-radius:10px;">
+              <button class="spin-btn minus" onclick="spinConfig('config-peso-bulto', -1)">&#8722;</button>
+              <input type="number" id="config-peso-bulto" value="40" min="1" class="cell-input" style="width:100px;font-size:1.3rem;font-weight:800;color:var(--accent);" onchange="guardarConfig()">
+              <button class="spin-btn plus" onclick="spinConfig('config-peso-bulto', 1)">&#43;</button>
+            </div>
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.5rem;">Generalmente 40 kg. Ajusta según el proveedor.</p>
+          </div>
+
+          <div class="input-group">
+            <label>Nombre de Finca por Defecto</label>
+            <input type="text" id="config-finca-default" placeholder="Nombre de la finca" oninput="guardarConfig()">
+          </div>
+          <div class="input-group">
+            <label>Responsable por Defecto</label>
+            <input type="text" id="config-responsable-default" placeholder="Nombre del responsable" oninput="guardarConfig()">
+          </div>
+
+          <button class="btn btn-primary" onclick="aplicarDefaults()" style="margin-top:0.5rem;">
+            <i data-lucide="check"></i> Aplicar como valores por defecto
+          </button>
+        </div>
+
+        <!-- Tabla de consumo editable -->
+        <div class="glass-panel p-2">
+          <h2 class="form-title" style="color:var(--salt-color);"><i data-lucide="edit-3"></i> Tabla de Consumo de Sal</h2>
+          <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:1rem;">Gramos de sal por animal por día, según estado productivo. Modificable.</p>
+          <table class="ref-table" id="config-sal-table">
+            <thead>
+              <tr>
+                <th>Estado Productivo</th>
+                <th>Cód.</th>
+                <th style="color:var(--salt-color);">Gr/Día</th>
+              </tr>
+            </thead>
+            <tbody id="config-sal-tbody">
+              <!-- Generado por JS -->
+            </tbody>
+          </table>
+          <div style="display:flex;gap:0.75rem;margin-top:1rem;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="guardarTablaConsumo()"><i data-lucide="save"></i> Guardar Tabla</button>
+            <button class="btn btn-danger" onclick="restaurarTablaConsumo()"><i data-lucide="rotate-ccw"></i> Restaurar Defecto</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info app -->
+      <div class="glass-panel p-2 mt-1" style="margin-top:1.5rem;border-left:4px solid var(--accent);">
+        <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+          <img src="Logo BoviSal Pro.png" style="width:60px;height:60px;border-radius:12px;object-fit:cover;">
+          <div>
+            <div style="font-weight:800;font-size:1.1rem;color:var(--accent);">BoviSal Control Pro</div>
+            <div style="font-size:0.82rem;color:var(--text-muted);">By Solugan SG — V 260604.1</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);margin-top:0.25rem;">JAN A. GONZALEZ · solugansg@gmail.com · +57 314 7084328</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 5. ADMIN USUARIOS (solo admin) ====== -->
+    <section id="admin-users" class="tab-content">
+      <header class="section-header">
+        <h1 style="color:#f59e0b;">👥 Administración de Usuarios</h1>
+        <p>Panel exclusivo para administradores de Solugan SG</p>
+      </header>
+      <div class="glass-panel p-2">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+          <h2 class="form-title" style="margin:0;border:none;padding:0;color:#f59e0b;"><i data-lucide="users"></i> Usuarios Registrados</h2>
+          <button class="btn" onclick="cargarUsuariosAdmin()" style="background:rgba(245,158,11,0.1);color:#f59e0b;border-color:rgba(245,158,11,0.3);"><i data-lucide="refresh-cw"></i> Actualizar</button>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table" id="admin-users-table" style="font-size:0.8rem;">
+            <thead>
+              <tr>
+                <th style="text-align:left;">Nombre</th>
+                <th style="text-align:left;">Email</th>
+                <th>NIT/C.C.</th>
+                <th style="text-align:left;">Finca</th>
+                <th>País</th>
+                <th>Teléfono</th>
+                <th>Accesos</th>
+                <th>Registro</th>
+              </tr>
+            </thead>
+            <tbody id="admin-users-tbody">
+              <tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:2rem;">Cargando usuarios...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="admin-total-usuarios" style="margin-top:0.75rem;font-size:0.82rem;color:var(--text-muted);"></div>
+      </div>
+    </section>
+
+  </main><!-- /main-content -->
+</div><!-- /app-container -->
+
+<!-- ====== MODAL DETALLE HISTÓRICO ====== -->
+<div class="modal-backdrop" id="modal-historico">
+  <div class="modal-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+      <h2 style="color:var(--accent);font-size:1.1rem;display:flex;align-items:center;gap:0.5rem;"><i data-lucide="eye"></i> Detalle del Registro</h2>
+      <button onclick="cerrarModalHistorico()" style="background:transparent;border:none;color:var(--text-muted);cursor:pointer;font-size:1.5rem;">✕</button>
+    </div>
+    <div id="modal-historico-content"></div>
+    <div style="display:flex;gap:0.75rem;margin-top:1.5rem;flex-wrap:wrap;">
+      <button class="btn btn-primary" onclick="cargarRegistroEnFormulario()"><i data-lucide="edit-3"></i> Cargar en Formulario</button>
+      <button class="btn" onclick="exportarExcelModal()" style="background:rgba(16,185,129,0.1);color:var(--accent);border-color:rgba(16,185,129,0.3);"><i data-lucide="file-spreadsheet"></i> Exportar Excel</button>
+      <button class="btn btn-danger" onclick="eliminarRegistro()"><i data-lucide="trash-2"></i> Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<!-- App Script -->
+<script src="bovisal-app.js?v=260604.1"></script>
+</body>
+</html>
