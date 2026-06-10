@@ -5,7 +5,7 @@
 
 // ─── FIREBASE CONFIG ──────────────────────────────────────
 const firebaseConfig = {
-  apiKey: "AIzaSyD00926bDZ-6meOB7X91glxeisfWtfkagM",
+  apiKey: "AIzaSyDO0926bDZ-6meOB7X91glxeisfWtfkagM",
   authDomain: "bovisal-control-pro.firebaseapp.com",
   projectId: "bovisal-control-pro",
   storageBucket: "bovisal-control-pro.firebasestorage.app",

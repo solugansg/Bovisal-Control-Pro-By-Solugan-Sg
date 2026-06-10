@@ -3,7 +3,7 @@ title BoviSal Control Pro - By Solugan SG
 color 0A
 echo.
 echo  =====================================================
-echo   BOVISAL CONTROL PRO - By Solugan SG  V 260610.8
+echo   BOVISAL CONTROL PRO - By Solugan SG  V 260610.9
 echo  =====================================================
 echo.
 echo  Iniciando servidor local...
