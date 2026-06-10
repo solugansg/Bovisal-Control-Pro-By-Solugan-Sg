@@ -18,7 +18,7 @@
   <link rel="icon" type="image/png" href="Logo BoviSal Pro.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=260604.1">
+  <link rel="stylesheet" href="style.css?v=260610.7">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -138,7 +138,7 @@
       <div class="logo-icon">
         <img src="Logo BoviSal Pro.png" alt="BoviSal Pro" style="width:100%;height:100%;object-fit:cover;border-radius:16px;">
       </div>
-      <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;margin-top:4px;">By Solugan Sg <span style="color:var(--accent);font-weight:bold;margin-left:2px;">V 260604.1</span></span>
+      <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;margin-top:4px;">By Solugan Sg <span style="color:var(--accent);font-weight:bold;margin-left:2px;">V 260610.7</span></span>
       <div id="sidebar-consultor" style="display:none;">
         <div style="font-size:0.62rem;color:var(--text-muted);font-weight:500;margin-bottom:2px;">Usuario activo</div>
         <div id="sidebar-consultor-name" style="font-size:0.65rem;color:var(--accent);font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;"></div>
@@ -198,7 +198,7 @@
       <button onclick="toggleSidebar()" style="background:transparent;border:none;color:var(--text-main);cursor:pointer;padding:4px;">
         <i data-lucide="menu" style="width:24px;height:24px;"></i>
       </button>
-      <span class="mobile-logo-text">BOVISAL PRO <span style="font-size:0.7rem;opacity:0.8;">V 260604.1</span></span>
+      <span class="mobile-logo-text">BOVISAL PRO <span style="font-size:0.7rem;opacity:0.8;">V 260610.7</span></span>
       <div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;">
         <img src="Logo BoviSal Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="BoviSal">
       </div>
@@ -214,7 +214,7 @@
       <!-- Encabezado del registro -->
       <div class="glass-panel p-2 mb-2">
         <h2 class="form-title text-accent"><i data-lucide="info"></i> Datos del Registro</h2>
-        <div class="grid-3" style="gap:1rem;">
+        <div class="grid-2" style="gap:1rem; margin-bottom:0.75rem;">
           <div class="input-group" style="margin-bottom:0;">
             <label style="color:var(--accent);font-weight:800;">Fecha</label>
             <input type="date" id="reg-fecha" oninput="calcularTotales()">
@@ -222,6 +222,12 @@
           <div class="input-group" style="margin-bottom:0;">
             <label>Nombre de la Finca</label>
             <input type="text" id="reg-finca-reg" placeholder="Ej: El Paraíso" oninput="calcularTotales()">
+          </div>
+        </div>
+        <div class="grid-2" style="gap:1rem;">
+          <div class="input-group" style="margin-bottom:0;">
+            <label>Nombre de la Sal</label>
+            <input type="text" id="reg-sal-nombre" placeholder="Ej: BoviSal 8%" oninput="calcularTotales()">
           </div>
           <div class="input-group" style="margin-bottom:0;">
             <label>Responsable</label>
@@ -231,38 +237,7 @@
       </div>
 
       <!-- Resumen rápido -->
-      <div class="resumen-grid" id="resumen-rapido">
-        <div class="resumen-card" style="border-top:4px solid var(--accent);">
-          <span class="rc-label">Total Animales</span>
-          <div class="rc-value text-accent" id="r-total-animales">0</div>
-          <div class="rc-unit">Animales en finca</div>
-        </div>
-        <div class="resumen-card" style="border-top:4px solid var(--warning);">
-          <span class="rc-label">Total Lotes</span>
-          <div class="rc-value text-warning" id="r-total-lotes">0</div>
-          <div class="rc-unit">Con animales activos</div>
-        </div>
-        <div class="resumen-card" style="border-top:4px solid var(--salt-color);">
-          <span class="rc-label">Sal Gr/Día</span>
-          <div class="rc-value" style="color:var(--salt-color)" id="r-sal-gr-dia">0</div>
-          <div class="rc-unit">Gramos por día</div>
-        </div>
-        <div class="resumen-card" style="border-top:4px solid var(--success);">
-          <span class="rc-label">Sal Kg/Día</span>
-          <div class="rc-value text-success" id="r-sal-kg-dia">0.0</div>
-          <div class="rc-unit">Kilogramos por día</div>
-        </div>
-        <div class="resumen-card" style="border-top:4px solid #f97316;">
-          <span class="rc-label">Sal Kg/Mes</span>
-          <div class="rc-value" style="color:#f97316;" id="r-sal-kg-mes">0.0</div>
-          <div class="rc-unit">Kilogramos por mes (30 días)</div>
-        </div>
-        <div class="resumen-card" style="border-top:4px solid #ef4444;">
-          <span class="rc-label">Bultos/Mes</span>
-          <div class="rc-value" style="color:#ef4444;" id="r-bultos-mes">0.0</div>
-          <div class="rc-unit" id="r-bultos-unit">Bultos (÷ <span id="lbl-peso-bulto">40</span> kg)</div>
-        </div>
-      </div>
+
 
       <!-- ─── FORMULARIO AGREGAR LOTE ─── -->
       <div class="glass-panel p-2" id="panel-nuevo-lote" style="margin-bottom:1.25rem;border-left:4px solid var(--accent);">
@@ -283,15 +258,15 @@
         <div style="overflow-x:auto;">
           <div style="min-width:600px;">
             <div style="display:grid;grid-template-columns:repeat(9,1fr);gap:0.4rem;margin-bottom:0.3rem;">
-              <div style="text-align:center;font-size:0.7rem;color:var(--accent);font-weight:800;padding:0.2rem;">CH<div style="color:var(--text-muted);font-weight:400;">15g</div></div>
-              <div style="text-align:center;font-size:0.7rem;color:var(--accent);font-weight:800;padding:0.2rem;">CM<div style="color:var(--text-muted);font-weight:400;">15g</div></div>
-              <div style="text-align:center;font-size:0.7rem;color:var(--accent);font-weight:800;padding:0.2rem;">HL<div style="color:var(--text-muted);font-weight:400;">50g</div></div>
-              <div style="text-align:center;font-size:0.7rem;color:var(--accent);font-weight:800;padding:0.2rem;">ML<div style="color:var(--text-muted);font-weight:400;">40g</div></div>
-              <div style="text-align:center;font-size:0.7rem;color:var(--accent);font-weight:800;padding:0.2rem;">NV<div style="color:var(--text-muted);font-weight:400;">60g</div></div>
-              <div style="text-align:center;font-size:0.7rem;color:var(--accent);font-weight:800;padding:0.2rem;">MC<div style="color:var(--text-muted);font-weight:400;">50g</div></div>
-              <div style="text-align:center;font-size:0.7rem;color:var(--accent);font-weight:800;padding:0.2rem;">T<div style="color:var(--text-muted);font-weight:400;">70g</div></div>
-              <div style="text-align:center;font-size:0.7rem;color:var(--accent);font-weight:800;padding:0.2rem;">VP<div style="color:var(--text-muted);font-weight:400;">80g</div></div>
-              <div style="text-align:center;font-size:0.7rem;color:var(--accent);font-weight:800;padding:0.2rem;">VS<div style="color:var(--text-muted);font-weight:400;">80g</div></div>
+              <div style="text-align:center;font-size:0.65rem;color:var(--accent);font-weight:800;padding:0.2rem;">Cría<br>Hembra<div style="color:var(--text-muted);font-weight:400;margin-top:2px;">15g</div></div>
+              <div style="text-align:center;font-size:0.65rem;color:var(--accent);font-weight:800;padding:0.2rem;">Cría<br>Macho<div style="color:var(--text-muted);font-weight:400;margin-top:2px;">15g</div></div>
+              <div style="text-align:center;font-size:0.65rem;color:var(--accent);font-weight:800;padding:0.2rem;">Hembra<br>Levante<div style="color:var(--text-muted);font-weight:400;margin-top:2px;">50g</div></div>
+              <div style="text-align:center;font-size:0.65rem;color:var(--accent);font-weight:800;padding:0.2rem;">Macho<br>Levante<div style="color:var(--text-muted);font-weight:400;margin-top:2px;">40g</div></div>
+              <div style="text-align:center;font-size:0.65rem;color:var(--accent);font-weight:800;padding:0.2rem;">Novilla<br>Vientre<div style="color:var(--text-muted);font-weight:400;margin-top:2px;">60g</div></div>
+              <div style="text-align:center;font-size:0.65rem;color:var(--accent);font-weight:800;padding:0.2rem;">Macho<br>Ceba<div style="color:var(--text-muted);font-weight:400;margin-top:2px;">50g</div></div>
+              <div style="text-align:center;font-size:0.65rem;color:var(--accent);font-weight:800;padding:0.2rem;">Toro /<br>Reprod.<div style="color:var(--text-muted);font-weight:400;margin-top:2px;">70g</div></div>
+              <div style="text-align:center;font-size:0.65rem;color:var(--accent);font-weight:800;padding:0.2rem;">Vaca<br>Parida<div style="color:var(--text-muted);font-weight:400;margin-top:2px;">80g</div></div>
+              <div style="text-align:center;font-size:0.65rem;color:var(--accent);font-weight:800;padding:0.2rem;">Vaca<br>Seca<div style="color:var(--text-muted);font-weight:400;margin-top:2px;">80g</div></div>
             </div>
             <div style="display:grid;grid-template-columns:repeat(9,1fr);gap:0.4rem;" id="nuevo-lote-inputs">
               <!-- Generado por JS -->
@@ -324,15 +299,15 @@
             <thead>
               <tr>
                 <th style="text-align:left;min-width:110px;background:#0f172a;">LOTE</th>
-                <th title="Cría Hembra" style="background:#0f172a;">CH<br><small style="color:var(--accent);font-size:0.65rem;">15g</small></th>
-                <th title="Cría Macho" style="background:#0f172a;">CM<br><small style="color:var(--accent);font-size:0.65rem;">15g</small></th>
-                <th title="Hembra Levante" style="background:#0f172a;">HL<br><small style="color:var(--accent);font-size:0.65rem;">50g</small></th>
-                <th title="Macho Levante" style="background:#0f172a;">ML<br><small style="color:var(--accent);font-size:0.65rem;">40g</small></th>
-                <th title="Novilla Vientre" style="background:#0f172a;">NV<br><small style="color:var(--accent);font-size:0.65rem;">60g</small></th>
-                <th title="Macho de Ceba" style="background:#0f172a;">MC<br><small style="color:var(--accent);font-size:0.65rem;">50g</small></th>
-                <th title="Toro/Reproductor" style="background:#0f172a;">T<br><small style="color:var(--accent);font-size:0.65rem;">70g</small></th>
-                <th title="Vaca Parida" style="background:#0f172a;">VP<br><small style="color:var(--accent);font-size:0.65rem;">80g</small></th>
-                <th title="Vaca Seca" style="background:#0f172a;">VS<br><small style="color:var(--accent);font-size:0.65rem;">80g</small></th>
+                <th title="Cría Hembra" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Cría<br>Hembra<br><small style="color:var(--accent);font-size:0.65rem;">15g</small></th>
+                <th title="Cría Macho" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Cría<br>Macho<br><small style="color:var(--accent);font-size:0.65rem;">15g</small></th>
+                <th title="Hembra Levante" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Hembra<br>Levante<br><small style="color:var(--accent);font-size:0.65rem;">50g</small></th>
+                <th title="Macho Levante" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Macho<br>Levante<br><small style="color:var(--accent);font-size:0.65rem;">40g</small></th>
+                <th title="Novilla Vientre" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Novilla<br>Vientre<br><small style="color:var(--accent);font-size:0.65rem;">60g</small></th>
+                <th title="Macho de Ceba" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Macho<br>Ceba<br><small style="color:var(--accent);font-size:0.65rem;">50g</small></th>
+                <th title="Toro/Reproductor" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Toro /<br>Reprod.<br><small style="color:var(--accent);font-size:0.65rem;">70g</small></th>
+                <th title="Vaca Parida" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Vaca<br>Parida<br><small style="color:var(--accent);font-size:0.65rem;">80g</small></th>
+                <th title="Vaca Seca" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Vaca<br>Seca<br><small style="color:var(--accent);font-size:0.65rem;">80g</small></th>
                 <th style="background:#0f172a;color:var(--warning);">Total<br>Anim.</th>
                 <th style="background:#0f172a;color:var(--salt-color);">Gr Sal<br>Día</th>
                 <th style="background:#0f172a;color:var(--success);">Kg Sal<br>Mes</th>
@@ -351,7 +326,7 @@
                 <td class="lote-total" id="total-ML">0</td>
                 <td class="lote-total" id="total-NV">0</td>
                 <td class="lote-total" id="total-MC">0</td>
-                <td class="lote-total" id="total-T">0</td>
+                <td class="lote-total" id="total-TR">0</td>
                 <td class="lote-total" id="total-VP">0</td>
                 <td class="lote-total" id="total-VS">0</td>
                 <td class="lote-total" id="total-general" style="color:var(--warning);">0</td>
@@ -364,29 +339,39 @@
         </div>
       </div>
 
-      <!-- Tabla referencia consumo -->
-      <div class="glass-panel p-2 mt-1" style="margin-top:1.5rem;">
-        <h2 class="form-title text-accent"><i data-lucide="beef"></i> Tabla Referencia: Consumo Sal por Categoría</h2>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;">
-          <table class="ref-table">
-            <thead>
-              <tr><th>Estado Productivo</th><th>Cód.</th><th>Gr Sal/Día</th></tr>
-            </thead>
-            <tbody id="ref-tbody">
-              <!-- Generado por JS -->
-            </tbody>
-          </table>
-          <div style="padding:1rem;background:rgba(16,185,129,0.05);border-radius:12px;border:1px solid rgba(16,185,129,0.2);">
-            <h4 style="color:var(--accent);margin-bottom:1rem;font-size:0.9rem;"><i data-lucide="info" style="width:14px;height:14px;"></i> Fórmulas de Cálculo</h4>
-            <div style="display:flex;flex-direction:column;gap:0.5rem;font-size:0.82rem;color:var(--text-muted);">
-              <div>🧂 <strong style="color:var(--text-main);">Gr/Día Lote</strong> = Σ(Animales × Gr/categoría)</div>
-              <div>⚖️ <strong style="color:var(--text-main);">Kg/Día Total</strong> = Total Gr/Día ÷ 1,000</div>
-              <div>📦 <strong style="color:var(--text-main);">Kg/Mes</strong> = Kg/Día × 30</div>
-              <div>🎒 <strong style="color:var(--text-main);">Bultos/Mes</strong> = Kg/Mes ÷ Peso Bulto</div>
-            </div>
-          </div>
+      <div class="resumen-grid mt-1" id="resumen-rapido" style="margin-top:1.5rem;">
+        <div class="resumen-card" style="border-top:4px solid var(--accent);">
+          <span class="rc-label">Total Animales</span>
+          <div class="rc-value text-accent" id="r-total-animales">0</div>
+          <div class="rc-unit">Animales en finca</div>
+        </div>
+        <div class="resumen-card" style="border-top:4px solid var(--warning);">
+          <span class="rc-label">Total Lotes</span>
+          <div class="rc-value text-warning" id="r-total-lotes">0</div>
+          <div class="rc-unit">Con animales activos</div>
+        </div>
+        <div class="resumen-card" style="border-top:4px solid var(--salt-color);">
+          <span class="rc-label">Sal Gr/Día</span>
+          <div class="rc-value" style="color:var(--salt-color)" id="r-sal-gr-dia">0</div>
+          <div class="rc-unit">Gramos por día</div>
+        </div>
+        <div class="resumen-card" style="border-top:4px solid var(--success);">
+          <span class="rc-label">Sal Kg/Día</span>
+          <div class="rc-value text-success" id="r-sal-kg-dia">0.0</div>
+          <div class="rc-unit">Kilogramos por día</div>
+        </div>
+        <div class="resumen-card" style="border-top:4px solid #f97316;">
+          <span class="rc-label">Sal Kg/Mes</span>
+          <div class="rc-value" style="color:#f97316;" id="r-sal-kg-mes">0.0</div>
+          <div class="rc-unit">Kilogramos por mes (30 días)</div>
+        </div>
+        <div class="resumen-card" style="border-top:4px solid #ef4444;">
+          <span class="rc-label">Bultos/Mes</span>
+          <div class="rc-value" style="color:#ef4444;" id="r-bultos-mes">0.0</div>
+          <div class="rc-unit" id="r-bultos-unit">Bultos (÷ <span id="lbl-peso-bulto">40</span> kg)</div>
         </div>
       </div>
+
     </section>
 
     <!-- ====== 2. DASHBOARD ====== -->
@@ -426,11 +411,16 @@
         <div class="resumen-card" style="border-top:4px solid var(--warning);">
           <span class="rc-label">Lotes Activos</span>
           <div class="rc-value text-warning" id="dash-lotes-activos">0</div>
-          <div class="rc-unit">De 20 lotes</div>
+          <div class="rc-unit"></div>
+        </div>
+        <div class="resumen-card" style="border-top:4px solid #8b5cf6;">
+          <span class="rc-label">Costo Mensual</span>
+          <div class="rc-value" style="color:#8b5cf6;" id="dash-costo-mes">$0</div>
+          <div class="rc-unit">Inversión aprox.</div>
         </div>
       </div>
 
-      <div class="grid-2">
+      <div class="grid-2 mb-2">
         <!-- Inventario por Categoría -->
         <div class="glass-panel p-2">
           <h2 class="form-title text-accent"><i data-lucide="pie-chart"></i> Inventario por Categoría</h2>
@@ -498,16 +488,41 @@
         <!-- Config general -->
         <div class="glass-panel p-2">
           <h2 class="form-title text-accent"><i data-lucide="package"></i> Parámetros del Bulto de Sal</h2>
-          <div class="input-group">
-            <label style="color:var(--accent);font-weight:800;">Peso del Bulto de Sal (kg)</label>
-            <div class="spinner-wrap" style="border-radius:10px;">
-              <button class="spin-btn minus" onclick="spinConfig('config-peso-bulto', -1)">&#8722;</button>
-              <input type="number" id="config-peso-bulto" value="40" min="1" class="cell-input" style="width:100px;font-size:1.3rem;font-weight:800;color:var(--accent);" onchange="guardarConfig()">
-              <button class="spin-btn plus" onclick="spinConfig('config-peso-bulto', 1)">&#43;</button>
+          <div class="grid-2" style="align-items:start;">
+            <div class="input-group" style="margin-bottom:0;">
+              <label style="color:var(--accent);font-weight:800;">Peso del Bulto de Sal (kg)</label>
+              <div class="spinner-wrap" style="border-radius:10px;">
+                <button class="spin-btn minus" onclick="spinConfig('config-peso-bulto', -1)">&#8722;</button>
+                <input type="number" id="config-peso-bulto" value="40" min="1" class="cell-input" style="width:100px;font-size:1.3rem;font-weight:800;color:var(--accent);" onchange="guardarConfig()">
+                <button class="spin-btn plus" onclick="spinConfig('config-peso-bulto', 1)">&#43;</button>
+              </div>
+              <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.5rem;">Generalmente 40 kg. Ajusta según el proveedor.</p>
             </div>
-            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.5rem;">Generalmente 40 kg. Ajusta según el proveedor.</p>
+
+            <div class="input-group" style="margin-bottom:0;">
+              <label style="color:var(--accent);font-weight:800;">Costo del Bulto de Sal ($)</label>
+              <div class="spinner-wrap" style="border-radius:10px;">
+                <button class="spin-btn minus" onclick="spinConfig('config-costo-bulto', -1000, 0, 80000)">&#8722;</button>
+                <input type="text" inputmode="numeric" id="config-costo-bulto" placeholder="Ej: 80000" class="cell-input" style="width:140px;font-size:1.3rem;font-weight:800;color:var(--accent);" onchange="guardarConfig()" oninput="formatoMoneda(this)">
+                <button class="spin-btn plus" onclick="spinConfig('config-costo-bulto', 1000, 0, 80000)">&#43;</button>
+              </div>
+              <div style="margin-top:1rem;padding:0.75rem;background:rgba(16,185,129,0.05);border-radius:8px;border:1px solid rgba(16,185,129,0.2);display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;text-align:center;">
+                <div>
+                  <div style="font-size:0.75rem;color:var(--text-muted);font-weight:600;">Costo por Kilo</div>
+                  <div id="lbl-costo-kilo" style="font-size:1.1rem;font-weight:800;color:var(--success);margin-top:0.25rem;">$ 0</div>
+                </div>
+                <div>
+                  <div style="font-size:0.75rem;color:var(--text-muted);font-weight:600;">Costo por Gramo</div>
+                  <div id="lbl-costo-gramo" style="font-size:1.1rem;font-weight:800;color:var(--warning);margin-top:0.25rem;">$ 0</div>
+                </div>
+              </div>
+            </div>
           </div>
 
+          <div class="input-group">
+            <label>Nombre de la Sal por Defecto</label>
+            <input type="text" id="config-sal-nombre" placeholder="Ej: BoviSal 8%" oninput="guardarConfig()">
+          </div>
           <div class="input-group">
             <label>Nombre de Finca por Defecto</label>
             <input type="text" id="config-finca-default" placeholder="Nombre de la finca" oninput="guardarConfig()">
@@ -524,7 +539,7 @@
 
         <!-- Tabla de consumo editable -->
         <div class="glass-panel p-2">
-          <h2 class="form-title" style="color:var(--salt-color);"><i data-lucide="edit-3"></i> Tabla de Consumo de Sal</h2>
+          <h2 class="form-title" style="color:var(--accent);"><i data-lucide="beef"></i> Tabla Referencia: Consumo Sal por Categoría</h2>
           <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:1rem;">Gramos de sal por animal por día, según estado productivo. Modificable.</p>
           <table class="ref-table" id="config-sal-table">
             <thead>
@@ -551,7 +566,7 @@
           <img src="Logo BoviSal Pro.png" style="width:60px;height:60px;border-radius:12px;object-fit:cover;">
           <div>
             <div style="font-weight:800;font-size:1.1rem;color:var(--accent);">BoviSal Control Pro</div>
-            <div style="font-size:0.82rem;color:var(--text-muted);">By Solugan SG — V 260604.1</div>
+            <div style="font-size:0.82rem;color:var(--text-muted);">By Solugan SG — V 260610.7</div>
             <div style="font-size:0.78rem;color:var(--text-muted);margin-top:0.25rem;">JAN A. GONZALEZ · solugansg@gmail.com · +57 314 7084328</div>
           </div>
         </div>
@@ -612,6 +627,6 @@
 </div>
 
 <!-- App Script -->
-<script src="bovisal-app.js?v=260604.1"></script>
+<script src="bovisal-app.js?v=260610.7"></script>
 </body>
 </html>

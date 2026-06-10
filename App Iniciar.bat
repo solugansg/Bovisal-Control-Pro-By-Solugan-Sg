@@ -1,9 +1,9 @@
 @echo off
-title BoviSal Control Pro — By Solugan SG
+title BoviSal Control Pro - By Solugan SG
 color 0A
 echo.
 echo  =====================================================
-echo   BOVISAL CONTROL PRO — By Solugan SG  V 260604.1
+echo   BOVISAL CONTROL PRO - By Solugan SG  V 260610.7
 echo  =====================================================
 echo.
 echo  Iniciando servidor local...

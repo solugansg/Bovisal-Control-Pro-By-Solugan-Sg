@@ -1,5 +1,5 @@
-// BoviSal Control Pro by Solugan SG — Service Worker V 260604.1
-const CACHE_NAME = 'bovisal-V260604.1';
+// BoviSal Control Pro by Solugan SG — Service Worker V 260610.7
+const CACHE_NAME = 'bovisal-V260610.7';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -71,11 +71,11 @@ self.addEventListener('fetch', event => {
           }
           return res;
         })
-        .catch(() => caches.match(event.request))
+        .catch(() => caches.match(event.request, { ignoreSearch: true }))
     );
   } else {
     event.respondWith(
-      caches.match(event.request).then(cached => {
+      caches.match(event.request, { ignoreSearch: true }).then(cached => {
         if (cached) return cached;
         return fetch(event.request).then(res => {
           if (res && res.status === 200) {
@@ -83,7 +83,7 @@ self.addEventListener('fetch', event => {
           }
           return res;
         }).catch(() => {
-          if (event.request.destination === 'document') return caches.match('index.html');
+          if (event.request.destination === 'document') return caches.match('index.html', { ignoreSearch: true });
         });
       })
     );

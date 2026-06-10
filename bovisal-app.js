@@ -1,6 +1,6 @@
 // ============================================================
 // BoviSal Control Pro — by Solugan SG
-// V 260604.1 — JAN A. GONZALEZ
+// V 260610.4 — JAN A. GONZALEZ
 // ============================================================
 
 // ─── FIREBASE CONFIG ──────────────────────────────────────
@@ -34,7 +34,7 @@ const CATEGORIAS = [
   { cod: 'ML', nombre: 'Macho Levante',       gr: 40  },
   { cod: 'NV', nombre: 'Novilla Vientre',     gr: 60  },
   { cod: 'MC', nombre: 'Macho de Ceba',       gr: 50  },
-  { cod: 'T',  nombre: 'Toro / Reproductor',  gr: 70  },
+  { cod: 'TR',  nombre: 'Toro / Reproductor',  gr: 70  },
   { cod: 'VP', nombre: 'Vaca Parida',         gr: 80  },
   { cod: 'VS', nombre: 'Vaca Seca',           gr: 80  },
 ];
@@ -42,6 +42,7 @@ const CATEGORIAS = [
 // ─── ESTADO LOCAL ─────────────────────────────────────────
 let state = {
   pesoBulto: 40,
+  costoBulto: 0,
   consumoGr: {},        // { CH: 15, CM: 15, ... } — editable por el usuario
   lotes: [],            // Array de 20 lotes con valores por categoría
   config: {},
@@ -77,7 +78,7 @@ auth.onAuthStateChanged(user => {
     if (appMainLayout)  appMainLayout.style.display   = 'flex';
 
     // Cargar perfil del usuario desde Firestore
-    db.collection("users").doc(user.uid).get().then(docSnap => {
+    db.collection(USER_COLL).doc(user.uid).get().then(docSnap => {
       if (docSnap.exists) {
         const data = docSnap.data();
         state.perfil = {
@@ -92,7 +93,7 @@ auth.onAuthStateChanged(user => {
         localStorage.setItem('bovisal_perfil', JSON.stringify(state.perfil));
       } else {
         // Guardar nuevo doc en users
-        db.collection("users").doc(user.uid).set({
+        db.collection(USER_COLL).doc(user.uid).set({
           uid: user.uid,
           email: user.email,
           name: user.displayName || '',
@@ -106,7 +107,7 @@ auth.onAuthStateChanged(user => {
       if (sidebarConsultor) sidebarConsultor.style.display = 'block';
 
       // Incrementar accesos
-      db.collection("users").doc(user.uid).update({
+      db.collection(USER_COLL).doc(user.uid).update({
         accessCount: firebase.firestore.FieldValue.increment(1),
         lastLogin: firebase.firestore.FieldValue.serverTimestamp()
       }).catch(() => {});
@@ -119,13 +120,18 @@ auth.onAuthStateChanged(user => {
         const d = snap.data();
         if (d.pesoBulto)    { state.pesoBulto = d.pesoBulto; }
         if (d.consumoGr)    { Object.assign(state.consumoGr, d.consumoGr); }
+        if (d.costoBulto !== undefined) { state.costoBulto = d.costoBulto; }
+        if (d.configSal)    { const el = document.getElementById('config-sal-nombre');     if (el) el.value = d.configSal; }
         if (d.configFinca)  { const el = document.getElementById('config-finca-default');  if (el) el.value = d.configFinca; }
         if (d.configResp)   { const el = document.getElementById('config-responsable-default'); if (el) el.value = d.configResp; }
       }
       // Aplicar peso bulto
       const pbEl = document.getElementById('config-peso-bulto');
       if (pbEl) pbEl.value = state.pesoBulto;
+      const cbEl = document.getElementById('config-costo-bulto');
+      if (cbEl && state.costoBulto > 0) cbEl.value = state.costoBulto.toLocaleString('es-CO');
       actualizarLabelBulto();
+      if (typeof calcularCostoSal === 'function') calcularCostoSal();
       renderConfigSal();
       renderRefTabla();
     }).catch(() => {
@@ -149,9 +155,11 @@ auth.onAuthStateChanged(user => {
       const f = localStorage.getItem('bovisal_last_fecha');
       const fn = localStorage.getItem('bovisal_last_finca');
       const rs = localStorage.getItem('bovisal_last_resp');
+      const sl = localStorage.getItem('bovisal_last_sal');
       if (f  && document.getElementById('reg-fecha'))       document.getElementById('reg-fecha').value = f;
       if (fn && document.getElementById('reg-finca-reg'))   document.getElementById('reg-finca-reg').value = fn;
       if (rs && document.getElementById('reg-responsable')) document.getElementById('reg-responsable').value = rs;
+      if (sl && document.getElementById('reg-sal-nombre'))  document.getElementById('reg-sal-nombre').value = sl;
     }
 
     renderFormularioLoteInputs();
@@ -198,7 +206,7 @@ window.handleRegister = function(event) {
 
   auth.createUserWithEmailAndPassword(email, pass)
     .then(cred => cred.user.updateProfile({ displayName: name }).then(() =>
-      db.collection("users").doc(cred.user.uid).set({
+      db.collection(USER_COLL).doc(cred.user.uid).set({
         uid: cred.user.uid, nit, name, email, phone, finca, pais,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       })
@@ -206,7 +214,7 @@ window.handleRegister = function(event) {
     .catch(err => {
       if (err.code === 'auth/email-already-in-use') {
         return auth.signInWithEmailAndPassword(email, pass)
-          .then(cred => db.collection("users").doc(cred.user.uid).set(
+          .then(cred => db.collection(USER_COLL).doc(cred.user.uid).set(
             { nit, name, email, phone, finca, pais, lastUpdated: firebase.firestore.FieldValue.serverTimestamp() },
             { merge: true }
           ));
@@ -468,6 +476,7 @@ window.calcularTotales = function() {
   const totalKgDia = totalGrDia / 1000;
   const totalKgMes = totalKgDia * 30;
   const bultosAl   = totalKgMes / (state.pesoBulto || 40);
+  const costoMensual = bultosAl * (state.costoBulto || 0);
 
   // Actualizar footer de tabla
   CATEGORIAS.forEach(c => {
@@ -488,7 +497,7 @@ window.calcularTotales = function() {
 
   // Estado para dashboard
   state.cachedTotales = {
-    totalAnimalesFinca, totalGrDia, totalKgDia, totalKgMes, bultosAl,
+    totalAnimalesFinca, totalGrDia, totalKgDia, totalKgMes, bultosAl, costoMensual,
     lotesActivos, totalesCat
   };
 };
@@ -507,9 +516,11 @@ function autoGuardarLocal() {
     const fecha = document.getElementById('reg-fecha')?.value       || '';
     const finca = document.getElementById('reg-finca-reg')?.value   || '';
     const resp  = document.getElementById('reg-responsable')?.value || '';
+    const sal   = document.getElementById('reg-sal-nombre')?.value  || '';
     localStorage.setItem('bovisal_last_fecha', fecha);
     localStorage.setItem('bovisal_last_finca', finca);
     localStorage.setItem('bovisal_last_resp',  resp);
+    localStorage.setItem('bovisal_last_sal',   sal);
   }, 400);
 }
 
@@ -520,6 +531,7 @@ window.guardarRegistro = function() {
   const fecha       = document.getElementById('reg-fecha')?.value       || '';
   const fincaNombre = document.getElementById('reg-finca-reg')?.value   || '';
   const responsable = document.getElementById('reg-responsable')?.value || '';
+  const salNombre   = document.getElementById('reg-sal-nombre')?.value  || '';
 
   if (!fecha)       { showToast('Por favor ingresa la fecha.', 'error');       return; }
   if (!fincaNombre) { showToast('Por favor ingresa el nombre de la finca.', 'error'); return; }
@@ -530,6 +542,7 @@ window.guardarRegistro = function() {
     uid:          state.currentUser.uid,
     fecha,
     fincaNombre,
+    salNombre,
     responsable,
     lotes:        JSON.parse(JSON.stringify(state.lotes)),
     consumoGr:    Object.assign({}, state.consumoGr),
@@ -541,7 +554,7 @@ window.guardarRegistro = function() {
     lotesActivos:  t.lotesActivos || 0,
     totalesCat:    t.totalesCat || {},
     createdAt:     firebase.firestore.FieldValue.serverTimestamp(),
-    version:       '260604.1'
+    version:       '260610.5'
   };
 
   db.collection(COLLECTION).add(registro)
@@ -575,6 +588,7 @@ function actualizarDashboard() {
   setVal('dash-bultos', t.bultosAl ? t.bultosAl.toFixed(1) : '0.0');
   setVal('dash-lotes-activos', t.lotesActivos || 0);
   setVal('dash-bultos-unit', `Bultos x ${state.pesoBulto}kg`);
+  setVal('dash-costo-mes', t.costoMensual ? `$${Math.round(t.costoMensual).toLocaleString('es-CO')}` : '$0');
 
   // Info finca
   const finca = document.getElementById('reg-finca-reg')?.value   || '—';
@@ -727,8 +741,9 @@ window.abrirDetalleHistorico = function(idx) {
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1.25rem;">
       <div><div style="font-size:0.72rem;color:var(--text-muted);">FINCA</div><div style="font-weight:700;">${r.fincaNombre || '—'}</div></div>
       <div><div style="font-size:0.72rem;color:var(--text-muted);">FECHA</div><div style="font-weight:700;">${r.fecha || '—'}</div></div>
+      <div><div style="font-size:0.72rem;color:var(--text-muted);">SAL</div><div style="font-weight:700;color:var(--salt-color);">${r.salNombre || '—'}</div></div>
       <div><div style="font-size:0.72rem;color:var(--text-muted);">RESPONSABLE</div><div style="font-weight:700;">${r.responsable || '—'}</div></div>
-      <div><div style="font-size:0.72rem;color:var(--text-muted);">LOTES ACTIVOS</div><div style="font-weight:700;">${r.lotesActivos || 0}</div></div>
+      <div style="grid-column: span 2;"><div style="font-size:0.72rem;color:var(--text-muted);">LOTES ACTIVOS</div><div style="font-weight:700;">${r.lotesActivos || 0}</div></div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin-bottom:1.25rem;">
       <div class="resumen-card" style="border-top:3px solid var(--accent);padding:0.75rem;">
@@ -773,6 +788,7 @@ window.cargarRegistroEnFormulario = function() {
     // Cargar encabezado
     if (r.fecha && document.getElementById('reg-fecha'))       document.getElementById('reg-fecha').value = r.fecha;
     if (r.fincaNombre && document.getElementById('reg-finca-reg')) document.getElementById('reg-finca-reg').value = r.fincaNombre;
+    if (r.salNombre && document.getElementById('reg-sal-nombre'))  document.getElementById('reg-sal-nombre').value = r.salNombre;
     if (r.responsable && document.getElementById('reg-responsable')) document.getElementById('reg-responsable').value = r.responsable;
 
     renderTablalotes();
@@ -801,24 +817,84 @@ window.eliminarRegistro = function() {
 window.guardarConfig = function() {
   const pb = parseInt(document.getElementById('config-peso-bulto')?.value) || 40;
   state.pesoBulto = pb;
+  
+  const cbEl = document.getElementById('config-costo-bulto');
+  const cbStr = cbEl ? String(cbEl.value).replace(/\D/g, '') : '';
+  const cb = parseInt(cbStr) || 0;
+  state.costoBulto = cb;
+
   actualizarLabelBulto();
   calcularTotales();
+  if (typeof calcularCostoSal === 'function') calcularCostoSal();
 
   if (!state.currentUser) return;
   const cfg = {
     pesoBulto:   pb,
+    costoBulto:  cb,
     consumoGr:   state.consumoGr,
+    configSal:   document.getElementById('config-sal-nombre')?.value || '',
     configFinca: document.getElementById('config-finca-default')?.value  || '',
     configResp:  document.getElementById('config-responsable-default')?.value || '',
   };
   db.collection(USER_COLL).doc(state.currentUser.uid).set(cfg, { merge: true }).catch(console.error);
 };
 
-window.spinConfig = function(id, delta) {
+window.calcularCostoSal = function() {
+  const elCosto = document.getElementById('config-costo-bulto');
+  if (!elCosto) return;
+  const costoStr = String(elCosto.value).replace(/\D/g, '');
+  const costo = parseInt(costoStr) || 0;
+  state.costoBulto = costo;
+  
+  const peso = state.pesoBulto || 40;
+  let costoKilo = 0;
+  let costoGramo = 0;
+  
+  if (peso > 0) {
+    costoKilo = costo / peso;
+    costoGramo = costoKilo / 1000;
+  }
+  
+  const lblKilo = document.getElementById('lbl-costo-kilo');
+  const lblGramo = document.getElementById('lbl-costo-gramo');
+  
+  if (lblKilo) lblKilo.textContent = '$ ' + costoKilo.toLocaleString('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+  if (lblGramo) lblGramo.textContent = '$ ' + costoGramo.toLocaleString('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 4 });
+};
+
+window.spinConfig = function(id, delta, minVal = 1, defaultVal = 40) {
   const el = document.getElementById(id);
   if (!el) return;
-  el.value = Math.max(1, (parseInt(el.value) || 40) + delta);
+  let valorStr = String(el.value).replace(/\D/g, '');
+  let nuevoValor = Math.max(minVal, (parseInt(valorStr) || defaultVal) + delta);
+  if (id === 'config-costo-bulto') {
+    el.value = nuevoValor.toLocaleString('es-CO');
+    calcularCostoSal();
+  } else {
+    el.value = nuevoValor;
+  }
   guardarConfig();
+};
+
+window.formatoMoneda = function(input) {
+  let originalLength = input.value.length;
+  let cursorPosition = input.selectionStart;
+  
+  let valorStr = input.value.replace(/\D/g, '');
+  if (!valorStr) {
+    input.value = '';
+    calcularCostoSal();
+    return;
+  }
+  
+  let valorNum = parseInt(valorStr, 10);
+  input.value = valorNum.toLocaleString('es-CO');
+  
+  let newLength = input.value.length;
+  cursorPosition = cursorPosition + (newLength - originalLength);
+  input.setSelectionRange(cursorPosition, cursorPosition);
+  
+  calcularCostoSal();
 };
 
 function actualizarLabelBulto() {
@@ -830,10 +906,12 @@ function actualizarLabelBulto() {
 }
 
 window.aplicarDefaults = function() {
+  const sal   = document.getElementById('config-sal-nombre')?.value     || '';
   const finca = document.getElementById('config-finca-default')?.value  || '';
   const resp  = document.getElementById('config-responsable-default')?.value || '';
-  if (finca && document.getElementById('reg-finca-reg'))   document.getElementById('reg-finca-reg').value   = finca;
-  if (resp  && document.getElementById('reg-responsable')) document.getElementById('reg-responsable').value = resp;
+  if (sal   && document.getElementById('reg-sal-nombre'))    document.getElementById('reg-sal-nombre').value  = sal;
+  if (finca && document.getElementById('reg-finca-reg'))     document.getElementById('reg-finca-reg').value   = finca;
+  if (resp  && document.getElementById('reg-responsable'))   document.getElementById('reg-responsable').value = resp;
   guardarConfig();
   showToast('Valores por defecto aplicados.', 'success');
 };
@@ -903,6 +981,7 @@ window.exportarExcel = function(registroData) {
     const r = registroData || null;
     const fecha   = r ? r.fecha        : (document.getElementById('reg-fecha')?.value       || 'sin-fecha');
     const finca   = r ? r.fincaNombre  : (document.getElementById('reg-finca-reg')?.value   || 'Finca');
+    const sal     = r ? r.salNombre    : (document.getElementById('reg-sal-nombre')?.value  || '');
     const resp    = r ? r.responsable  : (document.getElementById('reg-responsable')?.value || '');
     const lotes   = r ? r.lotes        : state.lotes;
 
@@ -917,7 +996,7 @@ window.exportarExcel = function(registroData) {
     // Datos encabezado
     const wsData = [
       ['BoviSal Control Pro — By Solugan SG', '', '', '', '', '', '', '', '', '', '', '', ''],
-      [`Finca: ${finca}`, '', `Fecha: ${fecha}`, '', `Responsable: ${resp}`, '', '', '', '', '', '', '', ''],
+      [`Finca: ${finca}`, '', `Fecha: ${fecha}`, '', `Sal: ${sal}`, '', `Responsable: ${resp}`, '', '', '', '', '', ''],
       [],
       ['LOTE', ...CATEGORIAS.map(c => c.cod), 'Total Animales', 'Gr Sal/Día', 'Kg Sal/Mes'],
     ];
@@ -966,6 +1045,7 @@ window.exportarExcelModal = function() {
 window.compartirWhatsApp = function() {
   const fecha   = document.getElementById('reg-fecha')?.value       || 'sin fecha';
   const finca   = document.getElementById('reg-finca-reg')?.value   || 'Finca';
+  const sal     = document.getElementById('reg-sal-nombre')?.value  || '';
   const resp    = document.getElementById('reg-responsable')?.value || '';
   const t       = state.cachedTotales || {};
   const anim    = t.totalAnimalesFinca || 0;
@@ -976,6 +1056,7 @@ window.compartirWhatsApp = function() {
   let msg = `🐄 *BoviSal Control Pro — Solugan SG*\n\n`;
   msg += `📅 Fecha: ${fecha}\n`;
   msg += `🌿 Finca: ${finca}\n`;
+  if (sal) msg += `🧂 Sal utilizada: ${sal}\n`;
   if (resp) msg += `👤 Responsable: ${resp}\n`;
   msg += `\n📊 *RESUMEN GENERAL*\n`;
   msg += `• Total animales: *${anim}*\n`;
@@ -1010,7 +1091,7 @@ window.cargarUsuariosAdmin = function() {
   if (!tbody) return;
   tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:1.5rem;color:var(--text-muted);">Cargando...</td></tr>';
 
-  db.collection("users").orderBy('createdAt', 'desc').get().then(snap => {
+  db.collection(USER_COLL).orderBy('createdAt', 'desc').get().then(snap => {
     const users = [];
     snap.forEach(doc => users.push({ id: doc.id, ...doc.data() }));
     if (totalEl) totalEl.textContent = `Total: ${users.length} usuario(s) registrado(s)`;
