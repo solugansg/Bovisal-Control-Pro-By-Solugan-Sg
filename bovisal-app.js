@@ -5,12 +5,12 @@
 
 // ─── FIREBASE CONFIG ──────────────────────────────────────
 const firebaseConfig = {
-  apiKey: "AIzaSyAxY70iSsexqNcAIm6h1ygCTzt2QHZ8umw",
-  authDomain: "iatf-pro-by-solugan-sg.firebaseapp.com",
-  projectId: "iatf-pro-by-solugan-sg",
-  storageBucket: "iatf-pro-by-solugan-sg.firebasestorage.app",
-  messagingSenderId: "171982395464",
-  appId: "1:171982395464:web:9302b7ae708b69097de07d"
+  apiKey: "AIzaSyD00926bDZ-6meOB7X91glxeisfWtfkagM",
+  authDomain: "bovisal-control-pro.firebaseapp.com",
+  projectId: "bovisal-control-pro",
+  storageBucket: "bovisal-control-pro.firebasestorage.app",
+  messagingSenderId: "801046420629",
+  appId: "1:801046420629:web:9e6800c40c511995f04f9c"
 };
 
 firebase.initializeApp(firebaseConfig);
