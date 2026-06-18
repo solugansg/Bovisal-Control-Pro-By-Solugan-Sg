@@ -134,7 +134,10 @@
     <div class="sidebar-toggle-handle" onclick="toggleSidebar()">
       <i data-lucide="chevron-left" style="width:16px;height:16px;"></i>
     </div>
-    <div class="sidebar-header">
+    <div class="sidebar-header" style="position:relative;">
+      <button class="mobile-close-sidebar-btn" onclick="toggleSidebar()" style="display:none; position:absolute; top:0.5rem; right:0.5rem; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2); color:#ef4444; padding:0.4rem; cursor:pointer; border-radius:8px; align-items:center; justify-content:center; transition:all 0.3s ease;">
+        <i data-lucide="x" style="width:18px;height:18px;"></i>
+      </button>
       <div class="logo-icon">
         <img src="BoviSal Control Pro - logo.png" alt="BoviSal Pro" style="width:100%;height:100%;object-fit:cover;border-radius:16px;">
       </div>

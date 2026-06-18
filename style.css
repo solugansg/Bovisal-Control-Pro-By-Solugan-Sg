@@ -707,6 +707,7 @@ input:checked + .slider:before { transform: translateX(20px); }
   .sidebar-toggle-handle { display: flex; }
   .main-content { padding: 1rem; width: 100%; }
   .mobile-header { display: flex; }
+  .mobile-close-sidebar-btn { display: flex !important; }
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
   .resumen-grid { grid-template-columns: 1fr 1fr; }
   .lote-input { width: 48px; font-size: 0.78rem; }
