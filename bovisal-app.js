@@ -29,14 +29,14 @@ const USER_COLL  = "bovisal_users";
 // ─── CATEGORÍAS (orden fijo) ──────────────────────────────
 const CATEGORIAS = [
   { cod: 'CH', nombre: 'Cría Hembra',        gr: 15  },
-  { cod: 'CM', nombre: 'Cría Macho',          gr: 15  },
   { cod: 'HL', nombre: 'Hembra Levante',      gr: 50  },
-  { cod: 'ML', nombre: 'Macho Levante',       gr: 40  },
   { cod: 'NV', nombre: 'Novilla Vientre',     gr: 60  },
-  { cod: 'MC', nombre: 'Macho de Ceba',       gr: 50  },
-  { cod: 'TR',  nombre: 'Toro / Reproductor',  gr: 70  },
   { cod: 'VP', nombre: 'Vaca Parida',         gr: 80  },
   { cod: 'VS', nombre: 'Vaca Seca',           gr: 80  },
+  { cod: 'CM', nombre: 'Cría Macho',          gr: 15  },
+  { cod: 'ML', nombre: 'Macho Levante',       gr: 40  },
+  { cod: 'MC', nombre: 'Macho de Ceba',       gr: 50  },
+  { cod: 'TR',  nombre: 'Toro / Reproductor',  gr: 70  },
 ];
 
 // ─── ESTADO LOCAL ─────────────────────────────────────────
@@ -125,6 +125,16 @@ auth.onAuthStateChanged(user => {
         if (d.configFinca)  { const el = document.getElementById('config-finca-default');  if (el) el.value = d.configFinca; }
         if (d.configResp)   { const el = document.getElementById('config-responsable-default'); if (el) el.value = d.configResp; }
       }
+      
+      // Sincronizar hacia los campos principales
+      const salVal = document.getElementById('config-sal-nombre')?.value || '';
+      const fincaVal = document.getElementById('config-finca-default')?.value || '';
+      const respVal = document.getElementById('config-responsable-default')?.value || '';
+      
+      if (document.getElementById('reg-sal-nombre'))  document.getElementById('reg-sal-nombre').value = salVal;
+      if (document.getElementById('reg-finca-reg'))   document.getElementById('reg-finca-reg').value  = fincaVal;
+      if (document.getElementById('reg-responsable')) document.getElementById('reg-responsable').value = respVal;
+
       // Aplicar peso bulto
       const pbEl = document.getElementById('config-peso-bulto');
       if (pbEl) pbEl.value = state.pesoBulto;
@@ -156,10 +166,15 @@ auth.onAuthStateChanged(user => {
       const fn = localStorage.getItem('bovisal_last_finca');
       const rs = localStorage.getItem('bovisal_last_resp');
       const sl = localStorage.getItem('bovisal_last_sal');
+      
+      const configSal = document.getElementById('config-sal-nombre')?.value || '';
+      const configFinca = document.getElementById('config-finca-default')?.value || '';
+      const configResp = document.getElementById('config-responsable-default')?.value || '';
+
       if (f  && document.getElementById('reg-fecha'))       document.getElementById('reg-fecha').value = f;
-      if (fn && document.getElementById('reg-finca-reg'))   document.getElementById('reg-finca-reg').value = fn;
-      if (rs && document.getElementById('reg-responsable')) document.getElementById('reg-responsable').value = rs;
-      if (sl && document.getElementById('reg-sal-nombre'))  document.getElementById('reg-sal-nombre').value = sl;
+      if (document.getElementById('reg-finca-reg'))   document.getElementById('reg-finca-reg').value = fn || configFinca;
+      if (document.getElementById('reg-responsable')) document.getElementById('reg-responsable').value = rs || configResp;
+      if (document.getElementById('reg-sal-nombre'))  document.getElementById('reg-sal-nombre').value = sl || configSal;
     }
 
     renderFormularioLoteInputs();
@@ -297,10 +312,16 @@ function renderFormularioLoteInputs() {
   const container = document.getElementById('nuevo-lote-inputs');
   if (!container) return;
   container.innerHTML = CATEGORIAS.map(c => `
-    <div class="spinner-wrap" style="display:flex;border-radius:6px;overflow:hidden;border:1px solid rgba(16,185,129,0.3);height:32px;background:rgba(0,0,0,0.2);">
-      <button class="spin-btn minus" onclick="spinFormLote('${c.cod}',-1)" style="padding:0 6px;color:var(--accent);">&#8722;</button>
-      <input type="number" id="nuevo_lote_${c.cod}" class="cell-input" style="flex:1;min-width:0;color:var(--text-main);font-weight:700;text-align:center;padding:0;background:transparent;border:none;" placeholder="0" min="0" onkeydown="if(event.key==='Enter'){agregarLote();}">
-      <button class="spin-btn plus" onclick="spinFormLote('${c.cod}',1)" style="padding:0 6px;color:var(--accent);">&#43;</button>
+    <div style="background:rgba(0,0,0,0.15); border:1px solid rgba(16,185,129,0.1); border-radius:8px; padding:0.5rem 0.75rem; display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.5rem;">
+      <div style="text-align:left; font-size:0.85rem; color:var(--accent); font-weight:800; line-height:1.2;">
+        ${c.nombre}
+        <div style="color:var(--text-muted); font-weight:400; font-size:0.75rem; margin-top:2px;">${c.gr}g</div>
+      </div>
+      <div class="spinner-wrap" style="display:flex; border-radius:6px; overflow:hidden; border:1px solid rgba(16,185,129,0.3); height:32px; background:rgba(0,0,0,0.2); width:120px;">
+        <button class="spin-btn minus" onclick="spinFormLote('${c.cod}',-1)" style="padding:0 10px; color:var(--accent); cursor:pointer; background:none; border:none;">&#8722;</button>
+        <input type="number" id="nuevo_lote_${c.cod}" class="cell-input" style="flex:1; min-width:0; color:var(--text-main); font-weight:700; text-align:center; padding:0; background:transparent; border:none;" placeholder="0" min="0" onkeydown="if(event.key==='Enter'){agregarLote();}">
+        <button class="spin-btn plus" onclick="spinFormLote('${c.cod}',1)" style="padding:0 10px; color:var(--accent); cursor:pointer; background:none; border:none;">&#43;</button>
+      </div>
     </div>
   `).join('');
 }
@@ -572,9 +593,18 @@ window.guardarRegistro = function() {
 window.limpiarLotes = function() {
   if (!confirm('¿Limpiar todos los lotes y reiniciar la tabla?')) return;
   initLotes();
+
+  const configSal = document.getElementById('config-sal-nombre')?.value || '';
+  const configFinca = document.getElementById('config-finca-default')?.value || '';
+  const configResp = document.getElementById('config-responsable-default')?.value || '';
+
+  if (document.getElementById('reg-finca-reg')) document.getElementById('reg-finca-reg').value = configFinca;
+  if (document.getElementById('reg-responsable')) document.getElementById('reg-responsable').value = configResp;
+  if (document.getElementById('reg-sal-nombre')) document.getElementById('reg-sal-nombre').value = configSal;
+
   renderTablalotes();
   autoGuardarLocal();
-  showToast('Tabla limpiada.', 'info');
+  showToast('Tabla limpiada y valores por defecto aplicados.', 'info');
 };
 
 // ─── DASHBOARD ───────────────────────────────────────────
@@ -827,14 +857,23 @@ window.guardarConfig = function() {
   calcularTotales();
   if (typeof calcularCostoSal === 'function') calcularCostoSal();
 
+  const salVal   = document.getElementById('config-sal-nombre')?.value || '';
+  const fincaVal = document.getElementById('config-finca-default')?.value  || '';
+  const respVal  = document.getElementById('config-responsable-default')?.value || '';
+
+  // Sincronizar instantáneamente con los campos de la pantalla principal
+  if (document.getElementById('reg-sal-nombre'))  document.getElementById('reg-sal-nombre').value = salVal;
+  if (document.getElementById('reg-finca-reg'))   document.getElementById('reg-finca-reg').value  = fincaVal;
+  if (document.getElementById('reg-responsable')) document.getElementById('reg-responsable').value = respVal;
+
   if (!state.currentUser) return;
   const cfg = {
     pesoBulto:   pb,
     costoBulto:  cb,
     consumoGr:   state.consumoGr,
-    configSal:   document.getElementById('config-sal-nombre')?.value || '',
-    configFinca: document.getElementById('config-finca-default')?.value  || '',
-    configResp:  document.getElementById('config-responsable-default')?.value || '',
+    configSal:   salVal,
+    configFinca: fincaVal,
+    configResp:  respVal,
   };
   db.collection(USER_COLL).doc(state.currentUser.uid).set(cfg, { merge: true }).catch(console.error);
 };

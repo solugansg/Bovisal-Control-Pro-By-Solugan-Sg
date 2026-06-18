@@ -1,5 +1,5 @@
-// BoviSal Control Pro by Solugan SG — Service Worker V 260610.9
-const CACHE_NAME = 'bovisal-V260610.9';
+// BoviSal Control Pro by Solugan SG — Service Worker V 260618.1
+const CACHE_NAME = 'bovisal-cache-v260618.3';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -7,10 +7,13 @@ const ASSETS_TO_CACHE = [
   'style.css',
   'bovisal-app.js',
   'lucide.min.js',
-  'manifest.json',
-  'Logo BoviSal Pro.png',
+  'bovisal-manifest.json',
+  'BoviSal Control Pro - logo.png',
   'apple-touch-icon.png',
   'libs/xlsx-js-style.min.js',
+  'libs/firebase-app-compat.js',
+  'libs/firebase-auth-compat.js',
+  'libs/firebase-firestore-compat.js',
   'fonts/inter-400.woff2',
   'fonts/inter-600.woff2',
   'fonts/inter-700.woff2'
@@ -60,6 +63,7 @@ self.addEventListener('fetch', event => {
     url.pathname.endsWith('/') ||
     url.pathname.endsWith('.html') ||
     url.pathname.endsWith('.css') ||
+    url.pathname.endsWith('.json') ||
     url.pathname.endsWith('bovisal-app.js');
 
   if (isNetworkFirst) {
@@ -71,7 +75,14 @@ self.addEventListener('fetch', event => {
           }
           return res;
         })
-        .catch(() => caches.match(event.request, { ignoreSearch: true }))
+        .catch(() => {
+          return caches.match(event.request, { ignoreSearch: true }).then(cached => {
+            if (cached) return cached;
+            if (event.request.mode === 'navigate' || event.request.destination === 'document') {
+              return caches.match('index.html', { ignoreSearch: true });
+            }
+          });
+        })
     );
   } else {
     event.respondWith(

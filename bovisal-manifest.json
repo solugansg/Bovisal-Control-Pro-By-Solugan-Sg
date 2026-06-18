@@ -1,0 +1,30 @@
+{
+  "id": "/",
+  "name": "BoviSal Control Pro by Solugan SG",
+  "short_name": "BoviSal Pro",
+  "description": "Control de consumo de sal mineral e inventario de animales por lotes en ganadería bovina",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "orientation": "any",
+  "background_color": "#020617",
+  "theme_color": "#10b981",
+  "lang": "es",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/BoviSal Control Pro - logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/BoviSal Control Pro - logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["business", "productivity", "agriculture"]
+}

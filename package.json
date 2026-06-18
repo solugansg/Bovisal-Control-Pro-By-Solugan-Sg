@@ -1,0 +1,14 @@
+{
+  "name": "bovisal-control-pro",
+  "version": "V 260618.1",
+  "description": "BoviSal Control Pro",
+  "main": "bovisal-app.js",
+  "scripts": {
+    "dev": "http-server . -p 8081 -c-1 -o"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "javascript-obfuscator": "^4.1.0"
+  }
+}

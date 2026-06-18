@@ -653,6 +653,32 @@ input:checked + .slider:before { transform: translateX(20px); }
   margin-top: 1.5rem;
 }
 
+/* Action buttons specifically for mobile layout */
+.matriz-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .matriz-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+  .matriz-actions .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.6rem 0.5rem;
+    font-size: 0.85rem;
+  }
+  .matriz-header-wrap {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 1rem !important;
+  }
+}
+
 /* Print */
 @media print {
   body { background: #fff !important; color: #000 !important; }

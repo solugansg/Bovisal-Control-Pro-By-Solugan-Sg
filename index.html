@@ -13,12 +13,12 @@
   <title>BoviSal Control Pro - Solugan SG</title>
 
   <!-- PWA -->
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="bovisal-manifest.json">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="icon" type="image/png" href="Logo BoviSal Pro.png">
+  <link rel="icon" type="image/png" href="BoviSal Control Pro - logo.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=260610.9">
+  <link rel="stylesheet" href="style.css?v=260618.1">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -32,9 +32,9 @@
   <script src="libs/xlsx-js-style.min.js"></script>
 
   <!-- Firebase Compat SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="libs/firebase-app-compat.js"></script>
+  <script src="libs/firebase-auth-compat.js"></script>
+  <script src="libs/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -43,7 +43,7 @@
   <div class="welcome-card glass-panel">
     <div style="text-align:center; margin-bottom: 1.5rem;">
       <div style="display:inline-flex;align-items:center;justify-content:center;margin-bottom:0.75rem;">
-        <img src="Logo BoviSal Pro.png" style="width:90px;height:90px;object-fit:contain;border-radius:18px;box-shadow:0 0 20px rgba(16,185,129,0.4);" alt="BoviSal Pro Logo">
+        <img src="BoviSal Control Pro - logo.png" style="width:90px;height:90px;object-fit:contain;border-radius:18px;box-shadow:0 0 20px rgba(16,185,129,0.4);" alt="BoviSal Pro Logo">
       </div>
       <div style="font-size:1.4rem;font-weight:800;color:var(--accent);letter-spacing:1px;">BoviSal Control Pro</div>
       <div style="font-size:0.85rem;color:var(--text-muted);font-weight:600;">By Solugan Sg</div>
@@ -136,9 +136,9 @@
     </div>
     <div class="sidebar-header">
       <div class="logo-icon">
-        <img src="Logo BoviSal Pro.png" alt="BoviSal Pro" style="width:100%;height:100%;object-fit:cover;border-radius:16px;">
+        <img src="BoviSal Control Pro - logo.png" alt="BoviSal Pro" style="width:100%;height:100%;object-fit:cover;border-radius:16px;">
       </div>
-      <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;margin-top:4px;">By Solugan Sg <span style="color:var(--accent);font-weight:bold;margin-left:2px;">V 260610.9</span></span>
+      <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;margin-top:4px;">By Solugan Sg <span style="color:var(--accent);font-weight:bold;margin-left:2px;">V 260618.1</span></span>
       <div id="sidebar-consultor" style="display:none;">
         <div style="font-size:0.62rem;color:var(--text-muted);font-weight:500;margin-bottom:2px;">Usuario activo</div>
         <div id="sidebar-consultor-name" style="font-size:0.65rem;color:var(--accent);font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;"></div>
@@ -175,9 +175,9 @@
         <div class="lang-group">
           <label class="lang-label">LANGUAGE / IDIOMA</label>
           <select id="language-selector" class="lang-select" onchange="changeLanguage(this.value)">
-            <option value="es">Español (ES)</option>
-            <option value="en">English (EN)</option>
-            <option value="pt">Português (PT)</option>
+            <option value="es" style="background: #fff; color: #000;">Español (ES)</option>
+            <option value="en" style="background: #fff; color: #000;">English (EN)</option>
+            <option value="pt" style="background: #fff; color: #000;">Português (PT)</option>
           </select>
         </div>
 
@@ -198,9 +198,9 @@
       <button onclick="toggleSidebar()" style="background:transparent;border:none;color:var(--text-main);cursor:pointer;padding:4px;">
         <i data-lucide="menu" style="width:24px;height:24px;"></i>
       </button>
-      <span class="mobile-logo-text">BOVISAL PRO <span style="font-size:0.7rem;opacity:0.8;">V 260610.9</span></span>
+      <span class="mobile-logo-text">BOVISAL PRO <span style="font-size:0.7rem;opacity:0.8;">V 260618.1</span></span>
       <div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;">
-        <img src="Logo BoviSal Pro.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="BoviSal">
+        <img src="BoviSal Control Pro - logo.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="BoviSal">
       </div>
     </div>
 
@@ -244,42 +244,28 @@
         <h2 class="form-title text-accent" style="margin-bottom:1rem;"><i data-lucide="plus-circle"></i> Agregar Nuevo Lote <span id="contador-lotes-form" style="font-size:0.78rem;color:var(--text-muted);font-weight:500;">(0 lotes)</span></h2>
 
         <div style="display:flex;gap:1rem;align-items:end;margin-bottom:1rem;flex-wrap:wrap;">
-          <div class="input-group" style="margin-bottom:0;flex:1;min-width:180px;">
+          <div class="input-group" style="margin-bottom:0;flex:0 1 50%;min-width:180px;">
             <label style="color:var(--accent);font-weight:800;">Nombre del Lote</label>
             <input type="text" id="nuevo-lote-nombre" placeholder="Ej: Potrero Norte, LOTE A..." style="width:100%;padding:0.65rem 1rem;background:var(--bg-input);border:1px solid rgba(16,185,129,0.4);border-radius:8px;color:var(--text-main);font-family:inherit;font-size:0.95rem;font-weight:700;" onkeydown="if(event.key==='Enter'){agregarLote();}">
           </div>
-          <div style="display:flex;gap:0.5rem;flex-shrink:0;">
-            <button class="btn btn-primary" onclick="agregarLote()" id="btn-agregar-lote" style="padding:0.65rem 1.2rem;"><i data-lucide="plus"></i> Agregar</button>
-            <button class="btn" onclick="limpiarFormularioLote()" style="background:rgba(239,68,68,0.08);color:#ef4444;border-color:rgba(239,68,68,0.25);padding:0.65rem 0.9rem;"><i data-lucide="rotate-ccw"></i></button>
-          </div>
         </div>
 
-        <!-- Grid de categorías -->
-        <div style="overflow-x:auto;">
-          <div style="min-width:600px;">
-            <div style="display:grid;grid-template-columns:repeat(9,1fr);gap:0.4rem;margin-bottom:0.3rem;">
-              <div style="text-align:center;font-size:0.65rem;color:var(--accent);font-weight:800;padding:0.2rem;">Cría<br>Hembra<div style="color:var(--text-muted);font-weight:400;margin-top:2px;">15g</div></div>
-              <div style="text-align:center;font-size:0.65rem;color:var(--accent);font-weight:800;padding:0.2rem;">Cría<br>Macho<div style="color:var(--text-muted);font-weight:400;margin-top:2px;">15g</div></div>
-              <div style="text-align:center;font-size:0.65rem;color:var(--accent);font-weight:800;padding:0.2rem;">Hembra<br>Levante<div style="color:var(--text-muted);font-weight:400;margin-top:2px;">50g</div></div>
-              <div style="text-align:center;font-size:0.65rem;color:var(--accent);font-weight:800;padding:0.2rem;">Macho<br>Levante<div style="color:var(--text-muted);font-weight:400;margin-top:2px;">40g</div></div>
-              <div style="text-align:center;font-size:0.65rem;color:var(--accent);font-weight:800;padding:0.2rem;">Novilla<br>Vientre<div style="color:var(--text-muted);font-weight:400;margin-top:2px;">60g</div></div>
-              <div style="text-align:center;font-size:0.65rem;color:var(--accent);font-weight:800;padding:0.2rem;">Macho<br>Ceba<div style="color:var(--text-muted);font-weight:400;margin-top:2px;">50g</div></div>
-              <div style="text-align:center;font-size:0.65rem;color:var(--accent);font-weight:800;padding:0.2rem;">Toro /<br>Reprod.<div style="color:var(--text-muted);font-weight:400;margin-top:2px;">70g</div></div>
-              <div style="text-align:center;font-size:0.65rem;color:var(--accent);font-weight:800;padding:0.2rem;">Vaca<br>Parida<div style="color:var(--text-muted);font-weight:400;margin-top:2px;">80g</div></div>
-              <div style="text-align:center;font-size:0.65rem;color:var(--accent);font-weight:800;padding:0.2rem;">Vaca<br>Seca<div style="color:var(--text-muted);font-weight:400;margin-top:2px;">80g</div></div>
-            </div>
-            <div style="display:grid;grid-template-columns:repeat(9,1fr);gap:0.4rem;" id="nuevo-lote-inputs">
-              <!-- Generado por JS -->
-            </div>
-          </div>
+        <!-- Categorías generadas por JS -->
+        <div id="nuevo-lote-inputs" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:0.6rem;margin-bottom:1rem;">
+          <!-- JS inserta las tarjetas aquí -->
+        </div>
+        
+        <div style="display:flex;gap:0.5rem;justify-content:flex-end;">
+          <button class="btn btn-primary" onclick="agregarLote()" id="btn-agregar-lote" style="padding:0 1rem;height:40px;font-size:0.9rem;gap:0.4rem;"><i data-lucide="plus" style="width:16px;height:16px;"></i> Agregar Lote</button>
+          <button class="btn" onclick="limpiarFormularioLote()" style="background:rgba(239,68,68,0.08);color:#ef4444;border-color:rgba(239,68,68,0.25);padding:0 0.75rem;height:40px;"><i data-lucide="rotate-ccw" style="width:16px;height:16px;"></i></button>
         </div>
       </div>
 
       <!-- ─── MATRIZ DE LOTES DINÁMICA ─── -->
       <div class="glass-panel p-2">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.75rem;">
+        <div class="matriz-header-wrap" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.75rem;">
           <h2 class="form-title text-accent" style="margin:0;border:none;padding:0;"><i data-lucide="table"></i> Matriz de Lotes (<span id="lbl-total-lotes">0</span>)</h2>
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+          <div class="matriz-actions">
             <button class="btn btn-primary" onclick="guardarRegistro()"><i data-lucide="save"></i> Guardar</button>
             <button class="btn" onclick="limpiarLotes()" style="background:rgba(239,68,68,0.1);color:#ef4444;border-color:rgba(239,68,68,0.3);"><i data-lucide="trash-2"></i> Limpiar</button>
             <button class="btn" onclick="exportarExcel()" style="background:rgba(16,185,129,0.1);color:var(--accent);border-color:rgba(16,185,129,0.3);"><i data-lucide="file-spreadsheet"></i> Excel</button>
@@ -300,14 +286,14 @@
               <tr>
                 <th style="text-align:left;min-width:110px;background:#0f172a;">LOTE</th>
                 <th title="Cría Hembra" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Cría<br>Hembra<br><small style="color:var(--accent);font-size:0.65rem;">15g</small></th>
-                <th title="Cría Macho" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Cría<br>Macho<br><small style="color:var(--accent);font-size:0.65rem;">15g</small></th>
                 <th title="Hembra Levante" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Hembra<br>Levante<br><small style="color:var(--accent);font-size:0.65rem;">50g</small></th>
-                <th title="Macho Levante" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Macho<br>Levante<br><small style="color:var(--accent);font-size:0.65rem;">40g</small></th>
                 <th title="Novilla Vientre" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Novilla<br>Vientre<br><small style="color:var(--accent);font-size:0.65rem;">60g</small></th>
-                <th title="Macho de Ceba" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Macho<br>Ceba<br><small style="color:var(--accent);font-size:0.65rem;">50g</small></th>
-                <th title="Toro/Reproductor" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Toro /<br>Reprod.<br><small style="color:var(--accent);font-size:0.65rem;">70g</small></th>
                 <th title="Vaca Parida" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Vaca<br>Parida<br><small style="color:var(--accent);font-size:0.65rem;">80g</small></th>
                 <th title="Vaca Seca" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Vaca<br>Seca<br><small style="color:var(--accent);font-size:0.65rem;">80g</small></th>
+                <th title="Cría Macho" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Cría<br>Macho<br><small style="color:var(--accent);font-size:0.65rem;">15g</small></th>
+                <th title="Macho Levante" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Macho<br>Levante<br><small style="color:var(--accent);font-size:0.65rem;">40g</small></th>
+                <th title="Macho de Ceba" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Macho<br>Ceba<br><small style="color:var(--accent);font-size:0.65rem;">50g</small></th>
+                <th title="Toro/Reproductor" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Toro /<br>Reprod.<br><small style="color:var(--accent);font-size:0.65rem;">70g</small></th>
                 <th style="background:#0f172a;color:var(--warning);">Total<br>Anim.</th>
                 <th style="background:#0f172a;color:var(--salt-color);">Gr Sal<br>Día</th>
                 <th style="background:#0f172a;color:var(--success);">Kg Sal<br>Mes</th>
@@ -321,14 +307,14 @@
               <tr style="background:rgba(16,185,129,0.05);border-top:2px solid var(--accent);">
                 <td style="text-align:left;font-weight:800;color:var(--accent);padding:0.75rem 0.5rem;">TOTALES</td>
                 <td class="lote-total" id="total-CH">0</td>
-                <td class="lote-total" id="total-CM">0</td>
                 <td class="lote-total" id="total-HL">0</td>
-                <td class="lote-total" id="total-ML">0</td>
                 <td class="lote-total" id="total-NV">0</td>
-                <td class="lote-total" id="total-MC">0</td>
-                <td class="lote-total" id="total-TR">0</td>
                 <td class="lote-total" id="total-VP">0</td>
                 <td class="lote-total" id="total-VS">0</td>
+                <td class="lote-total" id="total-CM">0</td>
+                <td class="lote-total" id="total-ML">0</td>
+                <td class="lote-total" id="total-MC">0</td>
+                <td class="lote-total" id="total-TR">0</td>
                 <td class="lote-total" id="total-general" style="color:var(--warning);">0</td>
                 <td class="lote-sal" id="total-gr-dia" style="font-weight:800;">0</td>
                 <td class="lote-kilos" id="total-kg-mes">0.0</td>
@@ -520,22 +506,17 @@
           </div>
 
           <div class="input-group">
-            <label>Nombre de la Sal por Defecto</label>
+            <label>Nombre de la Sal</label>
             <input type="text" id="config-sal-nombre" placeholder="Ej: BoviSal 8%" oninput="guardarConfig()">
           </div>
           <div class="input-group">
-            <label>Nombre de Finca por Defecto</label>
+            <label>Nombre de la Finca</label>
             <input type="text" id="config-finca-default" placeholder="Nombre de la finca" oninput="guardarConfig()">
           </div>
           <div class="input-group">
-            <label>Responsable por Defecto</label>
+            <label>Responsable</label>
             <input type="text" id="config-responsable-default" placeholder="Nombre del responsable" oninput="guardarConfig()">
           </div>
-
-          <button class="btn btn-primary" onclick="aplicarDefaults()" style="margin-top:0.5rem;">
-            <i data-lucide="check"></i> Aplicar como valores por defecto
-          </button>
-        </div>
 
         <!-- Tabla de consumo editable -->
         <div class="glass-panel p-2">
@@ -563,10 +544,10 @@
       <!-- Info app -->
       <div class="glass-panel p-2 mt-1" style="margin-top:1.5rem;border-left:4px solid var(--accent);">
         <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
-          <img src="Logo BoviSal Pro.png" style="width:60px;height:60px;border-radius:12px;object-fit:cover;">
+          <img src="BoviSal Control Pro - logo.png" style="width:60px;height:60px;border-radius:12px;object-fit:cover;">
           <div>
             <div style="font-weight:800;font-size:1.1rem;color:var(--accent);">BoviSal Control Pro</div>
-            <div style="font-size:0.82rem;color:var(--text-muted);">By Solugan SG — V 260610.9</div>
+            <div style="font-size:0.82rem;color:var(--text-muted);">By Solugan SG — V 260618.1</div>
             <div style="font-size:0.78rem;color:var(--text-muted);margin-top:0.25rem;">JAN A. GONZALEZ · solugansg@gmail.com · +57 314 7084328</div>
           </div>
         </div>
@@ -627,6 +608,6 @@
 </div>
 
 <!-- App Script -->
-<script src="bovisal-app.js?v=260610.9"></script>
+<script src="bovisal-app.js?v=260618.1"></script>
 </body>
 </html>
