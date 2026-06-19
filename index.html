@@ -18,7 +18,7 @@
   <link rel="icon" type="image/png" href="BoviSal Control Pro - logo.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=260619.8">
+  <link rel="stylesheet" href="style.css?v=260619.9">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -138,7 +138,7 @@
       <div class="logo-icon">
         <img src="BoviSal Control Pro - logo.png" alt="BoviSal Pro" style="width:100%;height:100%;object-fit:cover;border-radius:16px;">
       </div>
-      <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;margin-top:4px;">By Solugan Sg <span style="color:var(--accent);font-weight:bold;margin-left:2px;">V 260619.8</span></span>
+      <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;margin-top:4px;">By Solugan Sg <span style="color:var(--accent);font-weight:bold;margin-left:2px;">V 260619.9</span></span>
       <div id="sidebar-consultor" style="display:none;">
         <div style="font-size:0.62rem;color:var(--text-muted);font-weight:500;margin-bottom:2px;">Usuario activo</div>
         <div id="sidebar-consultor-name" style="font-size:0.65rem;color:var(--accent);font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;"></div>
@@ -198,7 +198,7 @@
       <button onclick="toggleSidebar()" style="background:transparent;border:none;color:var(--text-main);cursor:pointer;padding:4px;">
         <i data-lucide="menu" style="width:24px;height:24px;"></i>
       </button>
-      <span class="mobile-logo-text">BOVISAL PRO <span style="font-size:0.7rem;opacity:0.8;">V 260619.8</span></span>
+      <span class="mobile-logo-text">BOVISAL PRO <span style="font-size:0.7rem;opacity:0.8;">V 260619.9</span></span>
       <div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;">
         <img src="BoviSal Control Pro - logo.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="BoviSal">
       </div>
@@ -265,12 +265,7 @@
       <div class="glass-panel p-2">
         <div class="matriz-header-wrap" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.75rem;">
           <h2 class="form-title text-accent" style="margin:0;border:none;padding:0;"><i data-lucide="table"></i> Matriz de Lotes (<span id="lbl-total-lotes">0</span>)</h2>
-          <div class="matriz-actions">
-            <button class="btn btn-primary" onclick="guardarRegistro()"><i data-lucide="save"></i> Guardar</button>
-            <button class="btn" onclick="limpiarLotes()" style="background:rgba(239,68,68,0.1);color:#ef4444;border-color:rgba(239,68,68,0.3);"><i data-lucide="trash-2"></i> Limpiar</button>
-            <button class="btn" onclick="exportarExcel()" style="background:rgba(16,185,129,0.1);color:var(--accent);border-color:rgba(16,185,129,0.3);"><i data-lucide="file-spreadsheet"></i> Excel</button>
-            <button class="btn btn-whatsapp" onclick="compartirWhatsApp()" style="padding:0.5rem 0.9rem;font-size:0.85rem;"><i data-lucide="send"></i> WhatsApp</button>
-          </div>
+
         </div>
 
         <!-- Estado vacío -->
@@ -356,6 +351,13 @@
           <div class="rc-value" style="color:#ef4444;" id="r-bultos-mes">0.0</div>
           <div class="rc-unit" id="r-bultos-unit">Bultos (÷ <span id="lbl-peso-bulto">40</span> kg)</div>
         </div>
+      </div>
+
+      <div class="matriz-actions" style="margin-top:1.25rem;">
+        <button class="btn btn-primary" onclick="guardarRegistro()"><i data-lucide="save"></i> Guardar</button>
+        <button class="btn" onclick="limpiarLotes()" style="background:rgba(239,68,68,0.1);color:#ef4444;border-color:rgba(239,68,68,0.3);"><i data-lucide="trash-2"></i> Limpiar</button>
+        <button class="btn" onclick="exportarExcel()" style="background:rgba(16,185,129,0.1);color:var(--accent);border-color:rgba(16,185,129,0.3);"><i data-lucide="file-spreadsheet"></i> Excel</button>
+        <button class="btn btn-whatsapp" onclick="compartirWhatsApp()" style="padding:0.5rem 0.9rem;font-size:0.85rem;"><i data-lucide="send"></i> WhatsApp</button>
       </div>
 
     </section>
@@ -553,7 +555,7 @@
           <img src="BoviSal Control Pro - logo.png" style="width:60px;height:60px;border-radius:12px;object-fit:cover;">
           <div>
             <div style="font-weight:800;font-size:1.1rem;color:var(--accent);">BoviSal Control Pro</div>
-            <div style="font-size:0.82rem;color:var(--text-muted);">By Solugan SG — V 260619.8</div>
+            <div style="font-size:0.82rem;color:var(--text-muted);">By Solugan SG — V 260619.9</div>
             <div style="font-size:0.78rem;color:var(--text-muted);margin-top:0.4rem;">
               <div style="font-weight:600;">JAN A. GONZALEZ</div>
               <div>+57 314 7084328</div>
@@ -637,6 +639,6 @@
 </div>
 
 <!-- App Script -->
-<script src="bovisal-app.js?v=260619.8"></script>
+<script src="bovisal-app.js?v=260619.9"></script>
 </body>
 </html>
