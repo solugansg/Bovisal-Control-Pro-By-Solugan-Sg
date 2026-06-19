@@ -1,6 +1,6 @@
 // ============================================================
 // BoviSal Control Pro — by Solugan SG
-// V 260619.11 — JAN A. GONZALEZ
+// V 260619.12 — JAN A. GONZALEZ
 // ============================================================
 
 // ─── FIREBASE CONFIG ──────────────────────────────────────
@@ -604,7 +604,7 @@ window.guardarRegistro = function() {
     lotesActivos:  t.lotesActivos || 0,
     totalesCat:    t.totalesCat || {},
     createdAt:     firebase.firestore.FieldValue.serverTimestamp(),
-    version:       '260619.11'
+    version:       '260619.12'
   };
 
   db.collection(COLLECTION).add(registro)
@@ -725,8 +725,13 @@ window.cargarHistorico = function() {
   lista.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-muted);">Cargando...</div>';
 
   const isAdmin = state.currentUser.email === ADMIN_EMAIL;
-  let query = db.collection(COLLECTION).orderBy('createdAt', 'desc').limit(50);
-  if (!isAdmin) query = query.where('uid', '==', state.currentUser.uid);
+  let query = db.collection(COLLECTION);
+  
+  if (!isAdmin) {
+    query = query.where('uid', '==', state.currentUser.uid);
+  } else {
+    query = query.orderBy('createdAt', 'desc').limit(100);
+  }
 
   query.get().then(snap => {
     state.historico = [];
