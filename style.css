@@ -726,7 +726,7 @@ input:checked + .slider:before { transform: translateX(20px); }
   /* Ajustes para que la tabla de configuración quepa sin scroll */
   .ref-table th, .ref-table td { padding: 0.5rem 0.25rem; font-size: 0.78rem; }
   .spin-btn { padding: 0.3rem 0.5rem; font-size: 1rem; }
-  .cell-input { width: 60px !important; font-size: 0.9rem !important; }
+  .ref-gr-input { width: 60px !important; font-size: 0.9rem !important; }
   
   /* Show bottom nav and padding */
   .mobile-bottom-nav {
