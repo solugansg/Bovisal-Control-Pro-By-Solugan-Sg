@@ -584,6 +584,11 @@ input:checked + .slider:before { transform: translateX(20px); }
 /* Sidebar overlay (mobile) */
 .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 99; backdrop-filter: blur(4px); }
 
+/* ====== MOBILE BOTTOM NAV ====== */
+.mobile-bottom-nav {
+  display: none;
+}
+
 /* Sidebar toggle handle (mobile) */
 .sidebar-toggle-handle {
   display: none;
@@ -665,6 +670,8 @@ input:checked + .slider:before { transform: translateX(20px); }
     align-items: flex-start !important;
     gap: 1rem !important;
   }
+  .p-2 { padding: 1rem; }
+  .p-1-5 { padding: 0.75rem; }
 }
 
 /* Print */
@@ -715,6 +722,57 @@ input:checked + .slider:before { transform: translateX(20px); }
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
   .resumen-grid { grid-template-columns: 1fr 1fr; }
   .lote-input { width: 48px; font-size: 0.78rem; }
+  
+  /* Ajustes para que la tabla de configuración quepa sin scroll */
+  .ref-table th, .ref-table td { padding: 0.5rem 0.25rem; font-size: 0.78rem; }
+  .spin-btn { padding: 0.3rem 0.5rem; font-size: 1rem; }
+  .cell-input { width: 60px !important; font-size: 0.9rem !important; }
+  
+  /* Show bottom nav and padding */
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    background: #090e17;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    z-index: 90;
+    padding: 0.5rem 0;
+    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px));
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .bottom-nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    flex: 1;
+    transition: all 0.3s ease;
+  }
+
+  .bottom-nav-btn i, .bottom-nav-btn svg {
+    width: 22px !important;
+    height: 22px !important;
+    margin-bottom: 2px;
+  }
+
+  .bottom-nav-btn.active, .bottom-nav-btn:hover {
+    color: #fff;
+  }
+  
+  .main-content {
+    padding-bottom: 80px !important;
+  }
 }
 
 @media (min-width: 901px) and (min-height: 720px) {

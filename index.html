@@ -18,7 +18,7 @@
   <link rel="icon" type="image/png" href="BoviSal Control Pro - logo.png">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="style.css?v=260618.5">
+  <link rel="stylesheet" href="style.css?v=260619.2">
 
   <!-- Fuentes locales (offline) -->
   <style>
@@ -138,7 +138,7 @@
       <div class="logo-icon">
         <img src="BoviSal Control Pro - logo.png" alt="BoviSal Pro" style="width:100%;height:100%;object-fit:cover;border-radius:16px;">
       </div>
-      <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;margin-top:4px;">By Solugan Sg <span style="color:var(--accent);font-weight:bold;margin-left:2px;">V 260618.5</span></span>
+      <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;margin-top:4px;">By Solugan Sg <span style="color:var(--accent);font-weight:bold;margin-left:2px;">V 260619.2</span></span>
       <div id="sidebar-consultor" style="display:none;">
         <div style="font-size:0.62rem;color:var(--text-muted);font-weight:500;margin-bottom:2px;">Usuario activo</div>
         <div id="sidebar-consultor-name" style="font-size:0.65rem;color:var(--accent);font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;"></div>
@@ -198,7 +198,7 @@
       <button onclick="toggleSidebar()" style="background:transparent;border:none;color:var(--text-main);cursor:pointer;padding:4px;">
         <i data-lucide="menu" style="width:24px;height:24px;"></i>
       </button>
-      <span class="mobile-logo-text">BOVISAL PRO <span style="font-size:0.7rem;opacity:0.8;">V 260618.5</span></span>
+      <span class="mobile-logo-text">BOVISAL PRO <span style="font-size:0.7rem;opacity:0.8;">V 260619.2</span></span>
       <div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;">
         <img src="BoviSal Control Pro - logo.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="BoviSal">
       </div>
@@ -492,7 +492,7 @@
                 <input type="text" inputmode="numeric" id="config-costo-bulto" placeholder="Ej: 80000" class="cell-input" style="width:140px;font-size:1.3rem;font-weight:800;color:var(--accent);" onchange="guardarConfig()" oninput="formatoMoneda(this)">
                 <button class="spin-btn plus" onclick="spinConfig('config-costo-bulto', 1000, 0, 80000)">&#43;</button>
               </div>
-              <div style="margin-top:1rem;padding:0.75rem;background:rgba(16,185,129,0.05);border-radius:8px;border:1px solid rgba(16,185,129,0.2);display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;text-align:center;">
+              <div style="margin-top:1rem;padding:0.75rem;background:rgba(16,185,129,0.05);border-radius:8px;border:1px solid rgba(16,185,129,0.2);display:flex;flex-wrap:wrap;justify-content:space-around;gap:0.5rem;text-align:center;">
                 <div>
                   <div style="font-size:0.75rem;color:var(--text-muted);font-weight:600;">Costo por Kilo</div>
                   <div id="lbl-costo-kilo" style="font-size:1.1rem;font-weight:800;color:var(--success);margin-top:0.25rem;">$ 0</div>
@@ -517,29 +517,32 @@
             <label>Responsable</label>
             <input type="text" id="config-responsable-default" placeholder="Nombre del responsable" oninput="guardarConfig()">
           </div>
+          </div>
+        </div>
 
         <!-- Tabla de consumo editable -->
         <div class="glass-panel p-2">
           <h2 class="form-title" style="color:var(--accent);"><i data-lucide="beef"></i> Tabla Referencia: Consumo Sal por Categoría</h2>
           <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:1rem;">Gramos de sal por animal por día, según estado productivo. Modificable.</p>
-          <table class="ref-table" id="config-sal-table">
-            <thead>
-              <tr>
-                <th>Estado Productivo</th>
-                <th>Cód.</th>
-                <th style="color:var(--salt-color);">Gr/Día</th>
-              </tr>
-            </thead>
-            <tbody id="config-sal-tbody">
-              <!-- Generado por JS -->
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="ref-table" id="config-sal-table">
+              <thead>
+                <tr>
+                  <th>Estado Productivo</th>
+                  <th>Cód.</th>
+                  <th style="color:var(--salt-color);">Gr/Día</th>
+                </tr>
+              </thead>
+              <tbody id="config-sal-tbody">
+                <!-- Generado por JS -->
+              </tbody>
+            </table>
+          </div>
           <div style="display:flex;gap:0.75rem;margin-top:1rem;flex-wrap:wrap;">
             <button class="btn btn-primary" onclick="guardarTablaConsumo()"><i data-lucide="save"></i> Guardar Tabla</button>
             <button class="btn btn-danger" onclick="restaurarTablaConsumo()"><i data-lucide="rotate-ccw"></i> Restaurar Defecto</button>
           </div>
         </div>
-      </div>
 
       <!-- Info app -->
       <div class="glass-panel p-2 mt-1" style="margin-top:1.5rem;border-left:4px solid var(--accent);">
@@ -547,7 +550,7 @@
           <img src="BoviSal Control Pro - logo.png" style="width:60px;height:60px;border-radius:12px;object-fit:cover;">
           <div>
             <div style="font-weight:800;font-size:1.1rem;color:var(--accent);">BoviSal Control Pro</div>
-            <div style="font-size:0.82rem;color:var(--text-muted);">By Solugan SG — V 260618.1</div>
+            <div style="font-size:0.82rem;color:var(--text-muted);">By Solugan SG — V 260619.2</div>
             <div style="font-size:0.78rem;color:var(--text-muted);margin-top:0.25rem;">JAN A. GONZALEZ · solugansg@gmail.com · +57 314 7084328</div>
           </div>
         </div>
@@ -587,6 +590,25 @@
         <div id="admin-total-usuarios" style="margin-top:0.75rem;font-size:0.82rem;color:var(--text-muted);"></div>
       </div>
     </section>
+    <!-- ====== MOBILE BOTTOM NAV ====== -->
+    <div class="mobile-bottom-nav">
+      <button class="bottom-nav-btn" onclick="toggleSidebar()">
+        <i data-lucide="menu"></i>
+        <span>Menú</span>
+      </button>
+      <button class="bottom-nav-btn active" id="bot-nav-registro" onclick="showSection('registro-lotes', this)">
+        <i data-lucide="clipboard-list"></i>
+        <span>Registro</span>
+      </button>
+      <button class="bottom-nav-btn" id="bot-nav-dashboard" onclick="showSection('dashboard', this)">
+        <i data-lucide="layout-dashboard"></i>
+        <span>Dashboard</span>
+      </button>
+      <button class="bottom-nav-btn" id="bot-nav-historico" onclick="showSection('historico', this)">
+        <i data-lucide="search"></i>
+        <span>Histórico</span>
+      </button>
+    </div>
 
   </main><!-- /main-content -->
 </div><!-- /app-container -->
@@ -608,6 +630,6 @@
 </div>
 
 <!-- App Script -->
-<script src="bovisal-app.js?v=260618.4"></script>
+<script src="bovisal-app.js?v=260619.2"></script>
 </body>
 </html>

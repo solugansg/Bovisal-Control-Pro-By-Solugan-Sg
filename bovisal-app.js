@@ -1,6 +1,6 @@
 // ============================================================
 // BoviSal Control Pro — by Solugan SG
-// V 260610.4 — JAN A. GONZALEZ
+// V 260619.2 — JAN A. GONZALEZ
 // ============================================================
 
 // ─── FIREBASE CONFIG ──────────────────────────────────────
@@ -289,9 +289,26 @@ function traducirErrorFirebase(code) {
 window.showSection = function(id, btn) {
   document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.bottom-nav-btn').forEach(b => b.classList.remove('active'));
+  
   const section = document.getElementById(id);
   if (section) section.classList.add('active');
-  if (btn) btn.classList.add('active');
+  
+  // Sincronizar botones (sidebar y bottom nav)
+  if (id === 'registro-lotes') {
+    document.getElementById('nav-registro')?.classList.add('active');
+    document.getElementById('bot-nav-registro')?.classList.add('active');
+  } else if (id === 'dashboard') {
+    document.getElementById('nav-dashboard')?.classList.add('active');
+    document.getElementById('bot-nav-dashboard')?.classList.add('active');
+  } else if (id === 'historico') {
+    document.getElementById('nav-historico')?.classList.add('active');
+    document.getElementById('bot-nav-historico')?.classList.add('active');
+  } else if (id === 'configuracion') {
+    document.getElementById('nav-config')?.classList.add('active');
+  } else if (id === 'admin-users') {
+    document.getElementById('nav-admin')?.classList.add('active');
+  }
 
   // Acciones al cambiar pestaña
   if (id === 'dashboard') actualizarDashboard();
@@ -585,7 +602,7 @@ window.guardarRegistro = function() {
     lotesActivos:  t.lotesActivos || 0,
     totalesCat:    t.totalesCat || {},
     createdAt:     firebase.firestore.FieldValue.serverTimestamp(),
-    version:       '260610.5'
+    version:       '260619.2'
   };
 
   db.collection(COLLECTION).add(registro)
@@ -1194,10 +1211,29 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTablalotes();
   lucide.createIcons();
 
-  // Registrar Service Worker
+  // Registrar Service Worker con auto-actualización
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js')
-      .then(() => console.log('[BoviSal SW] Registrado.'))
+      .then(reg => {
+        console.log('[BoviSal SW] Registrado.');
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              console.log('[BoviSal SW] Nueva versión disponible. Actualizando...');
+              newWorker.postMessage({ type: 'SKIP_WAITING' });
+            }
+          });
+        });
+      })
       .catch(err => console.warn('[BoviSal SW] Error:', err));
+
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!refreshing) {
+        refreshing = true;
+        window.location.reload();
+      }
+    });
   }
 });
