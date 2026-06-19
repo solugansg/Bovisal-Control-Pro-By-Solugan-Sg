@@ -1,6 +1,6 @@
 // ============================================================
 // BoviSal Control Pro — by Solugan SG
-// V 260619.4 — JAN A. GONZALEZ
+// V 260619.5 — JAN A. GONZALEZ
 // ============================================================
 
 // ─── FIREBASE CONFIG ──────────────────────────────────────
@@ -588,6 +588,8 @@ window.guardarRegistro = function() {
 
   const registro = {
     uid:          state.currentUser.uid,
+    userNit:      state.perfil?.nit || '',
+    userName:     state.perfil?.name || state.currentUser.displayName || state.currentUser.email || '',
     fecha,
     fincaNombre,
     salNombre,
@@ -602,7 +604,7 @@ window.guardarRegistro = function() {
     lotesActivos:  t.lotesActivos || 0,
     totalesCat:    t.totalesCat || {},
     createdAt:     firebase.firestore.FieldValue.serverTimestamp(),
-    version:       '260619.4'
+    version:       '260619.5'
   };
 
   db.collection(COLLECTION).add(registro)
@@ -770,7 +772,14 @@ window.filtrarHistorico = function() {
   const q     = (document.getElementById('hist-buscar-finca')?.value || '').toLowerCase();
   const fecha = document.getElementById('hist-fecha')?.value || '';
   let filtrado = state.historico.filter(r => {
-    const okFinca = !q || (r.fincaNombre || '').toLowerCase().includes(q);
+    const terminos = [
+      r.fincaNombre || '',
+      r.responsable || '',
+      r.userNit || '',
+      r.userName || ''
+    ].join(' ').toLowerCase();
+
+    const okFinca = !q || terminos.includes(q);
     const okFecha = !fecha || r.fecha === fecha;
     return okFinca && okFecha;
   });
