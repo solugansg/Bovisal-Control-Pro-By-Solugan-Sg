@@ -689,7 +689,7 @@ input:checked + .slider:before { transform: translateX(20px); }
     height: 100vh;
     z-index: 100;
     transition: left 0.3s ease;
-    overflow-y: auto;
+    overflow: visible;
   }
   .sidebar.active { left: 0; }
   .sidebar-toggle-handle {
