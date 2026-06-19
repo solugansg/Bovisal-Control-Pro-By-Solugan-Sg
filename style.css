@@ -587,18 +587,6 @@ input:checked + .slider:before { transform: translateX(20px); }
 /* Sidebar toggle handle (mobile) */
 .sidebar-toggle-handle {
   display: none;
-  position: absolute;
-  right: -20px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: var(--bg-panel);
-  border: 1px solid var(--glass-border);
-  border-left: none;
-  border-radius: 0 8px 8px 0;
-  padding: 0.5rem 0.3rem;
-  cursor: pointer;
-  color: var(--text-muted);
-  z-index: 20;
 }
 
 /* Tabla de referencia consumo sal */
@@ -704,7 +692,23 @@ input:checked + .slider:before { transform: translateX(20px); }
     overflow-y: auto;
   }
   .sidebar.active { left: 0; }
-  .sidebar-toggle-handle { display: flex; }
+  .sidebar-toggle-handle {
+    display: flex !important;
+    position: absolute;
+    right: -24px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 80px;
+    background: #25d366;
+    color: #fff;
+    border-radius: 0 10px 10px 0;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+    z-index: 101;
+  }
   .main-content { padding: 1rem; width: 100%; }
   .mobile-header { display: flex; }
   .mobile-close-sidebar-btn { display: flex !important; }
