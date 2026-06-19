@@ -1,6 +1,6 @@
 // ============================================================
 // BoviSal Control Pro — by Solugan SG
-// V 260619.12 — JAN A. GONZALEZ
+// V 260619.13 — JAN A. GONZALEZ
 // ============================================================
 
 // ─── FIREBASE CONFIG ──────────────────────────────────────
@@ -604,7 +604,7 @@ window.guardarRegistro = function() {
     lotesActivos:  t.lotesActivos || 0,
     totalesCat:    t.totalesCat || {},
     createdAt:     firebase.firestore.FieldValue.serverTimestamp(),
-    version:       '260619.12'
+    version:       '260619.13'
   };
 
   db.collection(COLLECTION).add(registro)
@@ -771,9 +771,28 @@ function renderHistorico(registros) {
           <span>⚖️ <strong>${kgMes}</strong> kg/mes</span>
           <span>📦 <strong>${bultos}</strong> bultos</span>
         </div>
+        <div style="display:flex;gap:0.5rem;margin-top:1rem;border-top:1px solid rgba(255,255,255,0.05);padding-top:0.75rem;">
+          <button class="btn-outline-action btn-cargar" onclick="accionDirecta(event, ${idx}, 'cargar')">
+            <i data-lucide="eye" style="width:14px;height:14px;"></i> CARGAR
+          </button>
+          <button class="btn-outline-action btn-excel" onclick="accionDirecta(event, ${idx}, 'excel')">
+            <i data-lucide="file-spreadsheet" style="width:14px;height:14px;"></i> EXCEL
+          </button>
+          <button class="btn-outline-action btn-eliminar" onclick="accionDirecta(event, ${idx}, 'eliminar')">
+            <i data-lucide="trash-2" style="width:14px;height:14px;"></i> ELIMINAR
+          </button>
+        </div>
       </div>`;
   }).join('');
 }
+
+window.accionDirecta = function(event, idx, tipo) {
+  event.stopPropagation();
+  state.selectedRecord = state.historico[idx];
+  if (tipo === 'cargar') cargarRegistroEnFormulario();
+  if (tipo === 'excel') exportarExcelModal();
+  if (tipo === 'eliminar') eliminarRegistro();
+};
 
 window.filtrarHistorico = function() {
   const normalizar = (txt) => (txt || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();

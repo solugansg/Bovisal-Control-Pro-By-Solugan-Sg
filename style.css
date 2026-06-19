@@ -779,3 +779,36 @@ input:checked + .slider:before { transform: translateX(20px); }
   .logo-icon { width: 90px; height: 90px; border-radius: 18px; }
   .nav-btn { padding: 0.5rem 0.8rem; font-size: 0.92rem; }
 }
+
+/* Card direct actions */
+.btn-outline-action {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.2rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 20px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-cargar {
+  color: #0ea5e9;
+  border: 1px solid #0ea5e9;
+}
+.btn-cargar:hover { background: rgba(14, 165, 233, 0.1); }
+
+.btn-excel {
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+.btn-excel:hover { background: rgba(16, 185, 129, 0.1); }
+
+.btn-eliminar {
+  color: #ef4444;
+  border: 1px solid #ef4444;
+}
+.btn-eliminar:hover { background: rgba(239, 68, 68, 0.1); }
