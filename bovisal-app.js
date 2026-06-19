@@ -77,6 +77,16 @@ auth.onAuthStateChanged(user => {
     if (authContainer)  authContainer.style.display  = 'none';
     if (appMainLayout)  appMainLayout.style.display   = 'flex';
 
+    // Abrir menú lateral por defecto en móviles al iniciar
+    if (window.innerWidth <= 900) {
+      const sidebar = document.querySelector('.sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (sidebar && !sidebar.classList.contains('active')) {
+        sidebar.classList.add('active');
+        if (overlay) overlay.style.display = 'block';
+      }
+    }
+
     // Cargar perfil del usuario desde Firestore
     db.collection(USER_COLL).doc(user.uid).get().then(docSnap => {
       if (docSnap.exists) {
