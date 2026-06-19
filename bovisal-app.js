@@ -1,6 +1,6 @@
 // ============================================================
 // BoviSal Control Pro — by Solugan SG
-// V 260619.13 — JAN A. GONZALEZ
+// V 260619.14 — JAN A. GONZALEZ
 // ============================================================
 
 // ─── FIREBASE CONFIG ──────────────────────────────────────
@@ -604,7 +604,7 @@ window.guardarRegistro = function() {
     lotesActivos:  t.lotesActivos || 0,
     totalesCat:    t.totalesCat || {},
     createdAt:     firebase.firestore.FieldValue.serverTimestamp(),
-    version:       '260619.13'
+    version:       '260619.14'
   };
 
   db.collection(COLLECTION).add(registro)
@@ -784,6 +784,11 @@ function renderHistorico(registros) {
         </div>
       </div>`;
   }).join('');
+  
+  // Renderizar los iconos de lucide añadidos dinámicamente
+  setTimeout(() => {
+    if (window.lucide) lucide.createIcons();
+  }, 10);
 }
 
 window.accionDirecta = function(event, idx, tipo) {
