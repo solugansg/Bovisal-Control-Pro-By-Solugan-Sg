@@ -40,31 +40,30 @@
 
 <!-- ======================== PANTALLA DE AUTH ======================== -->
 <div id="auth-container" class="auth-wrapper">
-  <div class="welcome-card glass-panel">
-    <div style="text-align:center; margin-bottom: 1.5rem;">
-      <div style="display:inline-flex;align-items:center;justify-content:center;margin-bottom:0.75rem;">
-        <img src="BoviSal Control Pro - logo.png" style="width:90px;height:90px;object-fit:contain;border-radius:18px;box-shadow:0 0 20px rgba(16,185,129,0.4);" alt="BoviSal Pro Logo">
+  <div class="welcome-card glass-panel" style="padding:1.5rem 2rem;">
+    <div style="text-align:center; margin-bottom: 0.75rem;">
+      <div style="display:inline-flex;align-items:center;justify-content:center;margin-bottom:0.4rem;">
+        <img src="BoviSal Control Pro - logo.png" style="width:65px;height:65px;object-fit:contain;border-radius:14px;box-shadow:0 0 15px rgba(16,185,129,0.4);" alt="BoviSal Pro Logo">
       </div>
-      <div style="font-size:1.4rem;font-weight:800;color:var(--accent);letter-spacing:1px;">BoviSal Control Pro</div>
-      <div style="font-size:0.85rem;color:var(--text-muted);font-weight:600;">By Solugan Sg</div>
-      <h3 id="auth-subtitle" style="margin-top:0.75rem;color:var(--text-muted);font-size:0.9rem;font-weight:500;">REGISTRO DE USUARIO</h3>
+      <div style="font-size:1.25rem;font-weight:800;color:var(--accent);letter-spacing:1px;line-height:1.2;">BoviSal Control Pro</div>
+      <div style="font-size:0.8rem;color:var(--text-muted);font-weight:600;">By Solugan Sg</div>
     </div>
 
     <!-- Formulario Registro -->
     <form id="register-form" onsubmit="handleRegister(event)" autocomplete="off">
-      <div class="grid-1" style="gap:0.5rem;">
+      <div class="grid-1" style="gap:0.4rem;">
         <div class="input-group" style="margin-bottom:0;">
-          <label style="color:var(--accent);font-weight:800;">NIT / C.C. (Llave de acceso)</label>
-          <input type="text" id="reg-nit" required placeholder="Ingresa tu identificación" class="welcome-input" autocomplete="off">
+          <label style="color:var(--accent);font-weight:800;font-size:0.75rem;margin-bottom:0.15rem;">NIT / C.C. (Llave de acceso)</label>
+          <input type="text" id="reg-nit" required placeholder="Ingresa tu identificación" class="welcome-input" style="padding:0.45rem 0.8rem;font-size:0.85rem;" autocomplete="off">
         </div>
         <div class="input-group" style="margin-bottom:0;">
-          <label>Nombre Completo / Razón Social</label>
-          <input type="text" id="reg-name" required placeholder="Nombre completo" class="welcome-input" autocomplete="name">
+          <label style="font-size:0.75rem;margin-bottom:0.15rem;">Nombre Completo / Razón Social</label>
+          <input type="text" id="reg-name" required placeholder="Nombre completo" class="welcome-input" style="padding:0.45rem 0.8rem;font-size:0.85rem;" autocomplete="off">
         </div>
-        <div class="grid-2" style="gap:0.5rem;">
+        <div class="grid-2" style="gap:0.4rem;">
           <div class="input-group" style="margin-bottom:0;">
-            <label>País</label>
-            <select id="reg-pais" class="welcome-input">
+            <label style="font-size:0.75rem;margin-bottom:0.15rem;">País</label>
+            <select id="reg-pais" class="welcome-input" style="padding:0.45rem 0.8rem;font-size:0.85rem;">
               <option value="Colombia" selected>Colombia (+57)</option>
               <option value="Argentina">Argentina (+54)</option>
               <option value="Brasil">Brasil (+55)</option>
@@ -76,50 +75,53 @@
             </select>
           </div>
           <div class="input-group" style="margin-bottom:0;">
-            <label>Teléfono / WhatsApp</label>
-            <input type="tel" id="reg-phone" required placeholder="Ej: 3147084328" class="welcome-input" autocomplete="tel">
+            <label style="font-size:0.75rem;margin-bottom:0.15rem;">Teléfono / WhatsApp</label>
+            <input type="tel" id="reg-phone" required placeholder="Ej: 3147084328" class="welcome-input" style="padding:0.45rem 0.8rem;font-size:0.85rem;" autocomplete="off">
           </div>
         </div>
         <div class="input-group" style="margin-bottom:0;">
-          <label>Finca o Empresa</label>
-          <input type="text" id="reg-finca" required placeholder="Nombre de tu finca" class="welcome-input" autocomplete="organization">
+          <label style="font-size:0.75rem;margin-bottom:0.15rem;">Finca o Empresa</label>
+          <input type="text" id="reg-finca" required placeholder="Nombre de tu finca" class="welcome-input" style="padding:0.45rem 0.8rem;font-size:0.85rem;" autocomplete="off">
         </div>
         <div class="input-group" style="margin-bottom:0;">
-          <label>Correo Electrónico</label>
-          <input type="email" id="reg-email" required placeholder="usuario@ejemplo.com" class="welcome-input" autocomplete="username">
+          <label style="font-size:0.75rem;margin-bottom:0.15rem;">Correo Electrónico</label>
+          <input type="email" id="reg-email" required placeholder="usuario@ejemplo.com" class="welcome-input" style="padding:0.45rem 0.8rem;font-size:0.85rem;" autocomplete="off">
         </div>
         <div class="input-group" style="margin-bottom:0;">
-          <label>Contraseña</label>
-          <input type="password" id="reg-pass" required placeholder="Mínimo 6 caracteres" class="welcome-input" autocomplete="new-password">
+          <label style="font-size:0.75rem;margin-bottom:0.15rem;">Contraseña</label>
+          <input type="password" id="reg-pass" required placeholder="Mínimo 6 caracteres" class="welcome-input" style="padding:0.45rem 0.8rem;font-size:0.85rem;" autocomplete="new-password">
         </div>
       </div>
-      <button type="submit" class="btn btn-primary" style="width:100%;margin-top:1.25rem;padding:0.8rem;font-size:0.9rem;font-weight:800;letter-spacing:2px;justify-content:center;">
-        <i data-lucide="play"></i> REGISTRARSE Y EMPEZAR
+      <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.75rem;padding:0.6rem;font-size:0.85rem;font-weight:800;letter-spacing:1px;justify-content:center;">
+        <i data-lucide="play" style="width:18px;height:18px;"></i> REGISTRARSE Y EMPEZAR
       </button>
-      <p style="text-align:center;margin-top:1rem;font-size:0.85rem;color:var(--text-muted);">
+      <p style="text-align:center;margin-top:0.6rem;margin-bottom:0;font-size:0.8rem;color:var(--text-muted);">
         ¿Ya tienes cuenta? <span onclick="showLoginForm()" style="color:var(--accent);cursor:pointer;font-weight:bold;text-decoration:underline;">Inicia Sesión</span>
       </p>
     </form>
 
     <!-- Formulario Login -->
     <form id="login-form" onsubmit="handleLogin(event)" style="display:none;" autocomplete="off">
-      <div class="grid-1" style="gap:0.5rem;">
+      <div class="grid-1" style="gap:0.4rem;">
         <div class="input-group" style="margin-bottom:0;">
-          <label>Correo Electrónico</label>
-          <input type="email" id="login-email" required placeholder="usuario@ejemplo.com" class="welcome-input" autocomplete="off">
+          <label style="font-size:0.75rem;margin-bottom:0.15rem;">NIT / C.C.</label>
+          <input type="text" id="login-identificador" required placeholder="Ingresa tu identificación" class="welcome-input" style="padding:0.45rem 0.8rem;font-size:0.85rem;" autocomplete="off">
         </div>
         <div class="input-group" style="margin-bottom:0;">
-          <label>Contraseña</label>
-          <input type="password" id="login-pass" required placeholder="Ingresa tu contraseña" class="welcome-input" autocomplete="current-password">
+          <label style="font-size:0.75rem;margin-bottom:0.15rem;">Contraseña</label>
+          <input type="password" id="login-pass" required placeholder="Ingresa tu contraseña" class="welcome-input" style="padding:0.45rem 0.8rem;font-size:0.85rem;" autocomplete="current-password">
         </div>
       </div>
-      <button type="submit" class="btn btn-primary" style="width:100%;margin-top:1.25rem;padding:0.8rem;font-size:0.9rem;font-weight:800;letter-spacing:2px;justify-content:center;">
-        <i data-lucide="log-in"></i> INICIAR SESIÓN
+      <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.75rem;padding:0.6rem;font-size:0.85rem;font-weight:800;letter-spacing:1px;justify-content:center;">
+        <i data-lucide="log-in" style="width:18px;height:18px;"></i> INICIAR SESIÓN
       </button>
-      <p style="text-align:center;margin-top:1rem;font-size:0.85rem;color:var(--text-muted);">
+      <p style="text-align:center;margin-top:0.6rem;margin-bottom:0;font-size:0.8rem;color:var(--text-muted);">
         ¿No tienes cuenta? <span onclick="showRegisterForm()" style="color:var(--accent);cursor:pointer;font-weight:bold;text-decoration:underline;">Regístrate</span>
       </p>
     </form>
+    <div style="margin-top:1.5rem;font-size:0.6rem;color:var(--text-muted);text-align:justify;line-height:1.4;border-top:1px solid rgba(0,0,0,0.05);padding-top:0.8rem;">
+      <strong>Aviso Legal:</strong> Esta aplicación ha sido desarrollada con asistencia de Inteligencia Artificial. La veracidad de la información registrada (incluyendo imágenes o archivos que se suban) y el uso dado a la aplicación son responsabilidad exclusiva de cada usuario. El desarrollador no asume responsabilidad alguna por la pérdida de datos, decisiones tomadas basadas en la aplicación ni por el uso indebido de la misma, quedando expresamente excluido de cualquier demanda, reclamo o acción legal, ya sea de carácter particular o grupal.
+    </div>
   </div>
 </div>
 
@@ -138,7 +140,7 @@
       <div class="logo-icon">
         <img src="BoviSal Control Pro - logo.png" alt="BoviSal Pro" style="width:100%;height:100%;object-fit:cover;border-radius:16px;">
       </div>
-      <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;margin-top:4px;">By Solugan Sg <span style="color:var(--accent);font-weight:bold;margin-left:2px;">V 260619.14</span></span>
+      <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;margin-top:4px;">By Solugan Sg <span style="color:var(--accent);font-weight:bold;margin-left:2px;">V 260701.14</span></span>
       <div id="sidebar-consultor" style="display:none;">
         <div style="font-size:0.62rem;color:var(--text-muted);font-weight:500;margin-bottom:2px;">Usuario activo</div>
         <div id="sidebar-consultor-name" style="font-size:0.65rem;color:var(--accent);font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;"></div>
@@ -194,15 +196,7 @@
   <main class="main-content">
 
     <!-- Mobile Header -->
-    <div class="mobile-header">
-      <button onclick="toggleSidebar()" style="background:transparent;border:none;color:var(--text-main);cursor:pointer;padding:4px;">
-        <i data-lucide="menu" style="width:24px;height:24px;"></i>
-      </button>
-      <span class="mobile-logo-text">BOVISAL PRO <span style="font-size:0.7rem;opacity:0.8;">V 260619.14</span></span>
-      <div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;">
-        <img src="BoviSal Control Pro - logo.png" style="width:30px;height:30px;object-fit:contain;border-radius:6px;" alt="BoviSal">
-      </div>
-    </div>
+
 
     <!-- ====== 1. REGISTRO DE LOTES ====== -->
     <section id="registro-lotes" class="tab-content active">
@@ -217,23 +211,17 @@
         <div class="grid-2" style="gap:1rem; margin-bottom:0.75rem;">
           <div class="input-group" style="margin-bottom:0;">
             <label style="color:var(--accent);font-weight:800;">Fecha</label>
-            <input type="date" id="reg-fecha" oninput="calcularTotales()">
+            <input type="date" id="reg-fecha" oninput="calcularTotales()" autocomplete="off">
           </div>
           <div class="input-group" style="margin-bottom:0;">
             <label>Nombre de la Finca</label>
-            <input type="text" id="reg-finca-reg" placeholder="Ej: El Paraíso" oninput="calcularTotales()">
+            <input type="text" id="reg-finca-reg" placeholder="Ej: El Paraíso" oninput="calcularTotales()" autocomplete="off">
           </div>
         </div>
-        <div class="grid-2" style="gap:1rem;">
-          <div class="input-group" style="margin-bottom:0;">
-            <label>Nombre de la Sal</label>
-            <input type="text" id="reg-sal-nombre" placeholder="Ingrese nombre de la sal" oninput="calcularTotales()">
-          </div>
-          <div class="input-group" style="margin-bottom:0;">
+        <div class="input-group" style="margin-bottom:0;">
             <label>Responsable</label>
-            <input type="text" id="reg-responsable" placeholder="Nombre del responsable" oninput="calcularTotales()">
+            <input type="text" id="reg-responsable" placeholder="Nombre del responsable" oninput="calcularTotales()" autocomplete="off">
           </div>
-        </div>
       </div>
 
       <!-- Resumen rápido -->
@@ -244,11 +232,15 @@
         <h2 class="form-title text-accent" style="margin-bottom:1rem;"><i data-lucide="plus-circle"></i> Agregar Nuevo Lote <span id="contador-lotes-form" style="font-size:0.78rem;color:var(--text-muted);font-weight:500;">(0 lotes)</span></h2>
 
         <div style="display:flex;gap:1rem;align-items:end;margin-bottom:1rem;flex-wrap:wrap;">
-          <div class="input-group" style="margin-bottom:0;flex:0 1 50%;min-width:180px;">
+          <div class="input-group" style="margin-bottom:0;flex:0 1 30%;min-width:180px;">
             <label style="color:var(--accent);font-weight:800;">Nombre del Lote</label>
-            <input type="text" id="nuevo-lote-nombre" placeholder="Ej: Potrero Norte, LOTE A..." style="width:100%;padding:0.65rem 1rem;background:var(--bg-input);border:1px solid rgba(16,185,129,0.4);border-radius:8px;color:var(--text-main);font-family:inherit;font-size:0.95rem;font-weight:700;" onkeydown="if(event.key==='Enter'){agregarLote();}">
+            <input type="text" id="nuevo-lote-nombre" autocomplete="off" placeholder="Ej: Potrero Norte, LOTE A..." style="width:100%;padding:0.65rem 1rem;background:var(--bg-input);border:1px solid rgba(16,185,129,0.4);border-radius:8px;color:var(--text-main);font-family:inherit;font-size:0.95rem;font-weight:700;" onkeydown="if(event.key==='Enter'){agregarLote();}">
           </div>
-        </div>
+            <div class="input-group" style="margin-bottom:0;flex:1;min-width:180px;">
+              <label style="color:var(--accent);font-weight:800;">Producto</label>
+              <select id="nuevo-lote-producto" style="width:100%;padding:0.65rem 1rem;background:var(--bg-input);border:1px solid rgba(16,185,129,0.4);border-radius:8px;color:var(--text-main);font-size:0.95rem;font-weight:700;"></select>
+            </div>
+          </div>
 
         <!-- Categorías generadas por JS -->
         <div id="nuevo-lote-inputs" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:0.6rem;margin-bottom:1rem;">
@@ -280,6 +272,7 @@
             <thead>
               <tr>
                 <th style="text-align:left;min-width:110px;background:#0f172a;">LOTE</th>
+                <th style="background:#0f172a;min-width:100px;">Producto</th>
                 <th title="Cría Hembra" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Cría<br>Hembra<br><small style="color:var(--accent);font-size:0.65rem;">15g</small></th>
                 <th title="Hembra Levante" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Hembra<br>Levante<br><small style="color:var(--accent);font-size:0.65rem;">50g</small></th>
                 <th title="Novilla Vientre" style="background:#0f172a;min-width:65px;line-height:1.2;font-size:0.75rem;">Novilla<br>Vientre<br><small style="color:var(--accent);font-size:0.65rem;">60g</small></th>
@@ -301,6 +294,7 @@
             <tfoot>
               <tr style="background:rgba(16,185,129,0.05);border-top:2px solid var(--accent);">
                 <td style="text-align:left;font-weight:800;color:var(--accent);padding:0.75rem 0.5rem;">TOTALES</td>
+                <td></td>
                 <td class="lote-total" id="total-CH">0</td>
                 <td class="lote-total" id="total-HL">0</td>
                 <td class="lote-total" id="total-NV">0</td>
@@ -319,12 +313,7 @@
           </table>
         </div>
         
-        <div class="matriz-actions" style="margin-top:1.25rem;">
-          <button class="btn btn-primary" onclick="guardarRegistro()"><i data-lucide="save"></i> Guardar</button>
-          <button class="btn" onclick="limpiarLotes()" style="background:rgba(239,68,68,0.1);color:#ef4444;border-color:rgba(239,68,68,0.3);"><i data-lucide="trash-2"></i> Limpiar</button>
-          <button class="btn" onclick="exportarExcel()" style="background:rgba(16,185,129,0.1);color:var(--accent);border-color:rgba(16,185,129,0.3);"><i data-lucide="file-spreadsheet"></i> Excel</button>
-          <button class="btn btn-whatsapp" onclick="compartirWhatsApp()" style="padding:0.5rem 0.9rem;font-size:0.85rem;"><i data-lucide="send"></i> WhatsApp</button>
-        </div>
+        
       </div>
 
       <div class="resumen-grid mt-1" id="resumen-rapido" style="margin-top:1.5rem;">
@@ -359,6 +348,16 @@
           <div class="rc-unit" id="r-bultos-unit">Bultos (÷ <span id="lbl-peso-bulto">40</span> kg)</div>
         </div>
       </div>
+
+        <!-- Acciones movidas abajo -->
+        <div class="glass-panel" style="margin-top: 1.5rem;">
+<div class="matriz-actions" style="margin-top:1.25rem;">
+          <button class="btn btn-primary" onclick="guardarRegistro()"><i data-lucide="save"></i> Guardar</button>
+          <button class="btn" onclick="limpiarLotes()" style="background:rgba(239,68,68,0.1);color:#ef4444;border-color:rgba(239,68,68,0.3);"><i data-lucide="trash-2"></i> Limpiar</button>
+          <button class="btn" onclick="exportarExcel()" style="background:rgba(16,185,129,0.1);color:var(--accent);border-color:rgba(16,185,129,0.3);"><i data-lucide="file-spreadsheet"></i> Excel</button>
+          <button class="btn btn-whatsapp" onclick="compartirWhatsApp()" style="padding:0.5rem 0.9rem;font-size:0.85rem;"><i data-lucide="send"></i> WhatsApp</button>
+        </div>
+        </div>
 
 
     </section>
@@ -409,6 +408,8 @@
         </div>
       </div>
 
+        <div id="dashboard-productos-container" style="margin-top: 2rem;"></div>
+
       <div class="grid-2 mb-2">
         <!-- Inventario por Categoría -->
         <div class="glass-panel p-2">
@@ -445,14 +446,14 @@
         <div class="grid-3" style="gap:0.75rem;align-items:end;">
           <div class="input-group" style="margin-bottom:0;">
             <label>Buscar</label>
-            <input type="text" id="hist-buscar-finca" placeholder="Cédula, nombre o finca..." oninput="filtrarHistorico()">
+            <input type="text" id="hist-buscar-finca" placeholder="Cédula, nombre o finca..." oninput="filtrarHistorico()" autocomplete="off">
             <div style="font-size:0.65rem;color:var(--text-muted);margin-top:4px;line-height:1.2;">
               * Puedes buscar por: cédula/NIT, nombre de usuario o nombre de la finca.
             </div>
           </div>
           <div class="input-group" style="margin-bottom:0;">
             <label>Filtrar por Fecha</label>
-            <input type="date" id="hist-fecha" onchange="filtrarHistorico()">
+            <input type="date" id="hist-fecha" onchange="filtrarHistorico()" autocomplete="off">
           </div>
           <div style="display:flex;gap:0.5rem;">
             <button class="btn btn-primary" onclick="cargarHistorico()"><i data-lucide="refresh-cw"></i> Actualizar</button>
@@ -476,87 +477,21 @@
         <p>Parámetros de cálculo y tabla de referencia de consumo de sal</p>
       </header>
 
-      <div class="grid-2">
-        <!-- Config general -->
-        <div class="glass-panel p-2">
-          <h2 class="form-title text-accent"><i data-lucide="package"></i> Parámetros del Bulto de Sal</h2>
-          <div class="grid-2" style="align-items:start;">
-            <div class="input-group" style="margin-bottom:0;">
-              <label style="color:var(--accent);font-weight:800;">Peso del Bulto de Sal (kg)</label>
-              <div class="spinner-wrap" style="border-radius:10px;">
-                <button class="spin-btn minus" onclick="spinConfig('config-peso-bulto', -1)">&#8722;</button>
-                <input type="number" id="config-peso-bulto" value="40" min="1" class="cell-input" style="width:100px;font-size:1.3rem;font-weight:800;color:var(--accent);" onchange="guardarConfig()">
-                <button class="spin-btn plus" onclick="spinConfig('config-peso-bulto', 1)">&#43;</button>
-              </div>
-              <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.5rem;">Generalmente 40 kg. Ajusta según el proveedor.</p>
-            </div>
-
-            <div class="input-group" style="margin-bottom:0;">
-              <label style="color:var(--accent);font-weight:800;">Costo del Bulto de Sal ($)</label>
-              <div class="spinner-wrap" style="border-radius:10px;">
-                <button class="spin-btn minus" onclick="spinConfig('config-costo-bulto', -1000, 0, 80000)">&#8722;</button>
-                <input type="text" inputmode="numeric" id="config-costo-bulto" placeholder="Ej: 80.000" class="cell-input" style="width:140px;font-size:1.3rem;font-weight:800;color:var(--accent);" onchange="guardarConfig()" oninput="formatoMoneda(this)">
-                <button class="spin-btn plus" onclick="spinConfig('config-costo-bulto', 1000, 0, 80000)">&#43;</button>
-              </div>
-              <div style="margin-top:1rem;padding:0.75rem;background:rgba(16,185,129,0.05);border-radius:8px;border:1px solid rgba(16,185,129,0.2);display:flex;flex-wrap:wrap;justify-content:space-around;gap:0.5rem;text-align:center;">
-                <div>
-                  <div style="font-size:0.75rem;color:var(--text-muted);font-weight:600;">Costo por Kilo</div>
-                  <div id="lbl-costo-kilo" style="font-size:1.1rem;font-weight:800;color:var(--success);margin-top:0.25rem;">$ 0</div>
-                </div>
-                <div>
-                  <div style="font-size:0.75rem;color:var(--text-muted);font-weight:600;">Costo por Gramo</div>
-                  <div id="lbl-costo-gramo" style="font-size:1.1rem;font-weight:800;color:var(--warning);margin-top:0.25rem;">$ 0</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="input-group">
-            <label>Nombre de la Sal</label>
-            <input type="text" id="config-sal-nombre" placeholder="Ingrese nombre de la sal" oninput="guardarConfig()">
-          </div>
-          <div class="input-group">
-            <label>Nombre de la Finca</label>
-            <input type="text" id="config-finca-default" placeholder="Nombre de la finca" oninput="guardarConfig()">
-          </div>
-          <div class="input-group">
-            <label>Responsable</label>
-            <input type="text" id="config-responsable-default" placeholder="Nombre del responsable" oninput="guardarConfig()">
-          </div>
-          </div>
+      <div>
+        <!-- Configuración de Productos Dinámica -->
+        <div id="config-productos-container"></div>
+        <div style="text-align:center;margin:1.5rem 0;">
+          <button class="btn btn-primary" onclick="agregarNuevoProductoConfig()" style="padding:0.8rem 1.5rem;font-size:1rem;gap:0.5rem;">
+            <i data-lucide="plus-circle"></i> Agregar otro producto
+          </button>
         </div>
-
-        <!-- Tabla de consumo editable -->
-        <div class="glass-panel p-2">
-          <h2 class="form-title" style="color:var(--accent);"><i data-lucide="beef"></i> Tabla Referencia: Consumo Sal por Categoría</h2>
-          <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:1rem;">Gramos de sal por animal por día, según estado productivo. Modificable.</p>
-          <div class="table-responsive">
-            <table class="ref-table" id="config-sal-table">
-              <thead>
-                <tr>
-                  <th>Estado Productivo</th>
-                  <th>Cód.</th>
-                  <th style="color:var(--salt-color);">Gr/Día</th>
-                </tr>
-              </thead>
-              <tbody id="config-sal-tbody">
-                <!-- Generado por JS -->
-              </tbody>
-            </table>
-          </div>
-          <div style="display:flex;gap:0.75rem;margin-top:1rem;flex-wrap:wrap;">
-            <button class="btn btn-primary" onclick="guardarTablaConsumo()"><i data-lucide="save"></i> Guardar Tabla</button>
-            <button class="btn btn-danger" onclick="restaurarTablaConsumo()"><i data-lucide="rotate-ccw"></i> Restaurar Defecto</button>
-          </div>
-        </div>
-
-      <!-- Info app -->
+        <!-- Info app -->
       <div class="glass-panel p-2 mt-1" style="margin-top:1.5rem;border-left:4px solid var(--accent);">
         <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
           <img src="BoviSal Control Pro - logo.png" style="width:60px;height:60px;border-radius:12px;object-fit:cover;">
           <div>
             <div style="font-weight:800;font-size:1.1rem;color:var(--accent);">BoviSal Control Pro</div>
-            <div style="font-size:0.82rem;color:var(--text-muted);">By Solugan SG — V 260619.14</div>
+            <div style="font-size:0.82rem;color:var(--text-muted);">By Solugan SG - V 260701.14</div>
             <div style="font-size:0.78rem;color:var(--text-muted);margin-top:0.4rem;">
               <div style="font-weight:600;">JAN A. GONZALEZ</div>
               <div>+57 314 7084328</div>
@@ -564,6 +499,7 @@
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
 

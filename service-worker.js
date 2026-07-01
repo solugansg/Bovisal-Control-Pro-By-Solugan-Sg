@@ -1,5 +1,5 @@
-// BoviSal Control Pro by Solugan SG — Service Worker V 260619.14
-const CACHE_NAME = 'bovisal-cache-v260619.14';
+// BoviSal Control Pro by Solugan SG — Service Worker V 260701.14
+const CACHE_NAME = 'bovisal-cache-v1783000000015';
 
 const ASSETS_TO_CACHE = [
   './',
